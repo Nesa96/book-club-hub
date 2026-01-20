@@ -1,0 +1,37 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,400;1,500&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Lora", sans-serif;
+}
+
+body {
+  background-color: #d0e2f2;
+}
+
+.main-wrapper {
+  width: 1400px;
+  max-width: 100%;
+  margin: auto;
+  overflow: auto;
+  min-height: 300px;
+  background-color: #faf8f2;
+  padding: 30px;
+  border-radius: 5px;
+  position: relative;
+  box-shadow: 0px 4px 11px 0px rgb(0 0 0 / 14%);
+}
+
+.header-btns {
+  position: absolute;
+  top: 0;
+  right: 10px;
+}
+
+.books-container{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); 
+    gap: 20px;
+}

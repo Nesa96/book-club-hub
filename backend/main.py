@@ -11,20 +11,35 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+class Review(BaseModel):
+    user: str
+    rating: float
+    comment: str
+
 class Book(BaseModel):
     id: int
     title: str
     author: str
     year_read: int
-    rating: float
+    cover_url: str
     status: str # "read" o "recommended"
     summary: Optional[str] = None
+    reviews: list[Review] = []
 
 # Temporal DB
 books_db = [
-    Book(id=1, title="The Seven Husbands of Evelyn Hugo", author="Taylor Jenkins Reid", year_read=2025, rating=4.5, status="read", summary="A great story about Hollywood."),
-    Book(id=2, title="Project Hail Mary", author="Andy Weir", year_read=2025, rating=5.0, status="read", summary="Science fiction at its best."),
-    Book(id=3, title="The Midnight Library", author="Matt Haig", year_read=2025, rating=0.0, status="recommended")
+    Book(id=1, title="Aún no estoy muerta", author="Holly Jackson", year_read=2025, status="read", summary="The history of a death girl solving her murder",
+         cover_url = "https://m.media-amazon.com/images/I/71KJfkFKxbL.jpg"),
+    Book(id=2, title="Aún no estoy muerta", author="Holly Jackson", year_read=2025, status="read", summary="The history of a death girl solving her murder",
+    cover_url = "https://m.media-amazon.com/images/I/71KJfkFKxbL.jpg"),
+    Book(id=3, title="Aún no estoy muerta", author="Holly Jackson", year_read=2025, status="read", summary="The history of a death girl solving her murder",
+    cover_url = "https://m.media-amazon.com/images/I/71KJfkFKxbL.jpg"),
+    Book(id=4, title="Aún no estoy muerta", author="Holly Jackson", year_read=2025, status="read", summary="The history of a death girl solving her murder",
+         cover_url = "https://m.media-amazon.com/images/I/71KJfkFKxbL.jpg"),
+    Book(id=5, title="Aún no estoy muerta", author="Holly Jackson", year_read=2025, status="read", summary="The history of a death girl solving her murder",
+    cover_url = "https://m.media-amazon.com/images/I/71KJfkFKxbL.jpg"),
+    Book(id=6, title="Aún no estoy muerta", author="Holly Jackson", year_read=2025, status="read", summary="The history of a death girl solving her murder",
+    cover_url = "https://m.media-amazon.com/images/I/71KJfkFKxbL.jpg")
 ]
 
 @app.get("/books")

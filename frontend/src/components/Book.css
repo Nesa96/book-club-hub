@@ -1,0 +1,11 @@
+
+.book-card {
+    text-align: center;
+}
+
+.book-card img {
+  width: 100%; 
+  aspect-ratio: 2 / 3; 
+  object-fit: cover;
+  display: block;
+}
