@@ -7,7 +7,6 @@ import './BooksPage.css';
 function BooksPage(){
 
     const [books, setBooks] = useState([]);
-    const page_title = "ALL OUR BOOKS OF 2026";
 
     useEffect(() => {
         const fetchBooks = async () => {
@@ -21,7 +20,6 @@ function BooksPage(){
 
     return ( 
         <>
-            <Header pageTitle={page_title} />
             <div className='books-container'>
                 {books.map((book) => {return (
                     <Link key={book.id} to={`/book/${book.id}`} className="book-card-link" state={{ book: book }}>

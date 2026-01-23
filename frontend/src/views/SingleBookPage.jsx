@@ -38,7 +38,8 @@ function SingleBookPage(){
                     </div>
 
                     <div className="book-meta">
-                        <p><strong>Year:</strong> {book.year}</p>
+                        <p><strong>Published:</strong> {book.year}</p>
+                        <p><strong>Year Read:</strong> {book.year_read}</p>
                         <p><strong>Pages:</strong> {book.pages || 'N/A'}</p>
                     </div>
                 </div> 

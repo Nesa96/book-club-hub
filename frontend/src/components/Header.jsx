@@ -1,6 +1,16 @@
-import { NavLink } from "react-router-dom"
+import { NavLink, useLocation } from "react-router-dom";
+import './Header.css';
 
-function Header({pageTitle}) {
+function Header() {
+
+    const location = useLocation();
+
+    const title_pages = {'/': "BOOK CLUB - READING BOOKS",
+                         '/stats': 'Reading Statistics',
+                         '/next-book': 'Which would be the next book?'
+    }
+
+    const currentTitle = title_pages[location.pathname] || 'Book Club';
 
     return (
       <>
@@ -8,7 +18,7 @@ function Header({pageTitle}) {
         <header className="main-header">
             <div className="header-container">
                 <div className="header-brand">
-                    <h1>{pageTitle}</h1>
+                    <h1>{currentTitle}</h1>
                 </div>
                 
                 <nav className="header-nav">
