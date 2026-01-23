@@ -1,0 +1,17 @@
+
+.books-container{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); 
+    gap: 20px;
+    padding-top: 20px;
+}
+
+.book-card-link{
+    text-decoration: none;
+    color: inherit;
+
+    &:visited{
+        text-decoration: none;
+        color: inherit;
+    }
+}

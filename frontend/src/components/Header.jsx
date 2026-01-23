@@ -5,30 +5,25 @@ function Header({pageTitle}) {
     return (
       <>
 
-            <h1>{pageTitle}</h1>
-
-            <div className="header-btns">
+        <header className="main-header">
+            <div className="header-container">
+                <div className="header-brand">
+                    <h1>{pageTitle}</h1>
+                </div>
                 
-                    <NavLink to="/">
-                      <button className="btn">
-                          All Books
-                      </button>
+                <nav className="header-nav">
+                    <NavLink to="/" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+                        All Books
                     </NavLink>
-
-                    <NavLink to="/next-book">
-                      <button className="btn">
-                          Next Book
-                      </button>
+                    <NavLink to="/next-book" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+                        Next Book
                     </NavLink>
-
-                    <NavLink to="/stats">
-                      <button className="btn">
-                          Statistics
-                      </button>
+                    <NavLink to="/stats" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+                        Statistics
                     </NavLink>
-                    
-               
+                </nav>
             </div>
+        </header>
     
       </>
     )

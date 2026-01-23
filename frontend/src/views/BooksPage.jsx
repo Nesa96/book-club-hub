@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import Book from '../components/Book';
 import Header from '../components/Header';
+import { Link } from 'react-router-dom';
+import './BooksPage.css';
 
 function BooksPage(){
 
     const [books, setBooks] = useState([]);
-    const page_title = "All our books of 2026";
+    const page_title = "ALL OUR BOOKS OF 2026";
 
     useEffect(() => {
         const fetchBooks = async () => {
@@ -21,7 +23,11 @@ function BooksPage(){
         <>
             <Header pageTitle={page_title} />
             <div className='books-container'>
-                {books.map((book) => (<Book key={book.id} data={book}/>))}
+                {books.map((book) => {return (
+                    <Link key={book.id} to={`/book/${book.id}`} className="book-card-link" state={{ book: book }}>
+                        <Book  data={book}/>
+                    </Link>
+                )})}
             </div>
         </>
     );
