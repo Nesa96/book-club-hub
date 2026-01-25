@@ -81,7 +81,7 @@ function NewBookInfo({ type, onClose, onRefresh}) {
     };
 
   return (
-    <div className="book-overlay" onClick={onClose}>
+    <div className="book-overlay">
       <div className="book-content" onClick={(e) => e.stopPropagation()}>
 
         <button className="close-x" onClick={onClose}>
