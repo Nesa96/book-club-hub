@@ -8,7 +8,7 @@ function BooksPage({books, onRefresh}){
         <>
             <div className='books-container'>
                 {books.map((book) => {return (
-                    <Link key={book.id} to={`/book/${book.id}`} className="book-card-link" state={{ book: book }}>
+                    <Link key={book.id} to={`/book/${book.id}`} className="book-card-link">
                         <Book  data={book} onRefresh={onRefresh}/>
                     </Link>
                 )})}

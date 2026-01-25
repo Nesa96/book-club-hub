@@ -6,6 +6,8 @@ import AddReview from '../components/AddReview/AddReview';
 function SingleBookPage({allBooks, onRefresh}){
 
     const location = useLocation();
+    const isRecommended = location.state?.isRecommended || false;
+
     const navigate = useNavigate();
     const { id } = useParams();
     const book = allBooks.find(b => b.id === parseInt(id));
@@ -26,7 +28,7 @@ function SingleBookPage({allBooks, onRefresh}){
 
             if (response.ok) {
                 onRefresh(); 
-                navigate('/'); 
+                isRecommended ? navigate('/next-book') : navigate('/');; 
                 console.log("Book deleted successfully");
             } else {
                 alert("Failed to delete the book. Please try again.");
@@ -61,7 +63,7 @@ function SingleBookPage({allBooks, onRefresh}){
         <div className='single-book-container'>
             <div className='top-bar'>
                 <button className="back-button" onClick={() => navigate(-1)}>
-                    ← Back to all books page
+                    {isRecommended ? "← Back to next book page" : "← Back to all books page"}
                 </button>
 
                 <button className="remove-book" onClick={removeBook}>
@@ -98,36 +100,39 @@ function SingleBookPage({allBooks, onRefresh}){
                 </div> 
             </div>
 
-            <div className="book-reviews-section">
-                <h3>Our Reviews</h3>
-                <button className="add-review-btn" onClick={() => setIsReviewOpen(true)}>
-                    ADD NEW REVIEW
-                </button>
+            {!isRecommended && (
 
-                {isReviewOpen && (
-                    <AddReview 
-                        bookId={id} 
-                        currentReviews={book.reviews} 
-                        onRefresh={onRefresh} 
-                        onClose={() => setIsReviewOpen(false)}
-                    />
-                )}
+                <div className="book-reviews-section">
+                    <h3>Our Reviews</h3>
+                    <button className="add-review-btn" onClick={() => setIsReviewOpen(true)}>
+                        ADD NEW REVIEW
+                    </button>
 
-                {book.reviews && book.reviews.length > 0 ? (
-                    book.reviews.map((rev, index) => (
-                        <div key={index} className="review-card">
-                            <button className="remove-review" onClick={() => deleteReview(index)}>Remove Review</button>
-                            <div className="review-header">
-                                <strong>{rev.user}</strong>
-                                <span className="rating">⭐ {rev.rating}</span>
+                    {isReviewOpen && (
+                        <AddReview 
+                            bookId={id} 
+                            currentReviews={book.reviews} 
+                            onRefresh={onRefresh} 
+                            onClose={() => setIsReviewOpen(false)}
+                        />
+                    )}
+
+                    {book.reviews && book.reviews.length > 0 ? (
+                        book.reviews.map((rev, index) => (
+                            <div key={index} className="review-card">
+                                <button className="remove-review" onClick={() => deleteReview(index)}>Remove Review</button>
+                                <div className="review-header">
+                                    <strong>{rev.user}</strong>
+                                    <span className="rating">⭐ {rev.rating}</span>
+                                </div>
+                                <p className="review-comment">"{rev.comment}"</p>
                             </div>
-                            <p className="review-comment">"{rev.comment}"</p>
-                        </div>
-                    ))
-                ) : (
-                    <p>No reviews yet</p>
-                )}
-            </div>   
+                        ))
+                    ) : (
+                        <p>No reviews yet</p>
+                    )}
+                </div>
+            )}       
         </div>
     );
 
