@@ -1,11 +1,12 @@
 import { NavLink, useLocation } from "react-router-dom";
 import './Header.css';
+import AddButton from '../AddButton/AddButton.jsx';
 
-function Header() {
+function Header({ onAddRead, onAddRecommended }) {
 
     const location = useLocation();
 
-    const title_pages = {'/': "BOOK CLUB - READING BOOKS",
+    const title_pages = {'/': "BOOK CLUB - All our readed books",
                          '/stats': 'Reading Statistics',
                          '/next-book': 'Which would be the next book?'
     }
@@ -31,6 +32,7 @@ function Header() {
                     <NavLink to="/stats" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
                         Statistics
                     </NavLink>
+                    <AddButton onAddRead={onAddRead} onAddRecommended={onAddRecommended} />
                 </nav>
             </div>
         </header>

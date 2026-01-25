@@ -1,5 +1,5 @@
 
-function StatsPage(){
+function StatsPage({stats, onRefresh}){
 
     return ( 
         <>

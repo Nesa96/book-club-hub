@@ -14,7 +14,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # Esto permite que React se conecte
+    allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -73,7 +73,7 @@ def get_stats(year: Optional[int] = None, session: Session = Depends(get_session
         statement = statement.where(Book.year_read == year)
 
     read_books = session.exec(statement).all()
-    avg_rating = sum(b.media_rating for b in read_books) / len(read_books) if read_books else 0
+    avg_rating = sum(b.media_rating or 0 for b in read_books) / len(read_books) if read_books else 0
     return {
         "total_read": len(read_books),
         "average_rating": round(avg_rating, 2),
@@ -100,3 +100,12 @@ def update_book(book_id: int, update_data: dict, session: Session = Depends(get_
     session.commit()
     session.refresh(db_book)
     return db_book
+
+@app.delete("/books/{book_id}")
+def delete_book(book_id: int, session: Session = Depends(get_session)):
+    book = session.get(Book, book_id)
+    if not book:
+        raise HTTPException(status_code=404, detail="Book not found")
+    session.delete(book)
+    session.commit()
+    return {"ok": True}
