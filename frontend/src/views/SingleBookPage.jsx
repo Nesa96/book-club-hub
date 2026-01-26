@@ -2,6 +2,7 @@ import { useParams , useLocation, useNavigate} from 'react-router-dom';
 import './SingleBookPage.css';
 import { useState } from 'react';
 import AddReview from '../components/AddReview/AddReview';
+import ModifyElement from '../components/ModifyElement/ModifyElement';
 
 function SingleBookPage({allBooks, onRefresh}){
 
@@ -12,6 +13,11 @@ function SingleBookPage({allBooks, onRefresh}){
     const { id } = useParams();
     const book = allBooks.find(b => b.id === parseInt(id));
     const [isReviewOpen, setIsReviewOpen] = useState(false);
+    const [isEditOpen, setIsEditOpen] = useState(false);
+    const [editValue, setEditValue] = useState("");
+    const [editType, setEditType] = useState("");
+    const [editIndex, setEditIndex] = useState(null);
+    const [initialValue, setInitialValue] = useState("");
     
     if (!book) {
         return <div className="error-message">Book wasn't found, please go back to the general view</div>;
@@ -36,7 +42,7 @@ function SingleBookPage({allBooks, onRefresh}){
         } catch (error) {
             console.error("Error deleting book:", error);
         }
-    }
+    };
 
     async function deleteReview(indexToDelete) {
         const confirmed = window.confirm("Are you sure you want to delete this review?");
@@ -61,6 +67,61 @@ function SingleBookPage({allBooks, onRefresh}){
         }
     };
 
+    async function onEditSave(newValue) {
+        let payload = {};
+
+        if (editType === "Review") {
+            const updatedReviews = [...book.reviews];
+            
+            updatedReviews[editIndex] = { 
+                ...updatedReviews[editIndex],
+                [editValue]: editValue === 'rating' ? parseFloat(newValue) : newValue 
+            };
+
+            const totalScore = updatedReviews.reduce((sum, rev) => sum + parseFloat(rev.rating), 0);
+            const newMedia = (totalScore / updatedReviews.length).toFixed(1);
+
+            payload = { 
+                reviews: updatedReviews, 
+                media_rating: parseFloat(newMedia) 
+            };
+        } 
+
+        else {
+            const finalValue = (editValue === 'year' || editValue === 'pages') 
+                ? parseInt(newValue, 10) 
+                : newValue;
+
+            payload = { [editValue]: finalValue };
+        }
+
+        try {
+            const response = await fetch(`http://localhost:8000/books/${id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                onRefresh();
+                setIsEditOpen(false); 
+            } else {
+                console.error("Server error when updating");
+                alert("Error saving the value");
+            }
+        } catch (error) {
+            console.error("Network error:", error);
+        }
+    }
+
+    async function editElement(mod_type, field, value, index = null) {
+        setEditType(mod_type);     
+        setEditValue(field);   
+        setInitialValue(value);  
+        setEditIndex(index);     
+        setIsEditOpen(true);
+    }
+
     return (
         <div className='single-book-container'>
             <div className='top-bar'>
@@ -78,7 +139,7 @@ function SingleBookPage({allBooks, onRefresh}){
                 <div className='book-details'>
                     <img src={book.cover_url} alt={`${book.title} cover`} />
 
-                    {!isRecommended && book.media_rating !== undefined && (
+                    {!isRecommended && book.media_rating !== undefined && book.media_rating !== null && (
                         <div className="book-average-rating">
                             <div className="stars-container">
                                 <div className="stars-empty">
@@ -96,12 +157,22 @@ function SingleBookPage({allBooks, onRefresh}){
                 </div>
 
                 <div className='book-detail-info'>
-                    <span className="book-category">{book.genre || 'Other'}</span>
+                    <div className="editable-group">
+                        <span className="book-category">{book.genre || 'Other'}</span>
+                        <button className="edit-btn-inline" onClick={() => editElement("Book", 'genre', book.genre)}>
+                            ✏️
+                        </button>
+                    </div>
                     <h1>{book.title}</h1>
                     <h2 className="book-author">by {book.author}</h2>
                     
                     <div className="book-description">
-                        <h3>Summary</h3>
+                        <div className="editable-group">
+                            <h3>Summary</h3>
+                            <button className="edit-btn-inline" onClick={() => editElement("Book", 'summary', book.summary)}>
+                                ✏️
+                            </button>
+                        </div>
                         {book.summary ? (
                             book.summary.split('\n').map((text, index) => (
                                 text.trim() !== '' && <p key={index} style={{ marginBottom: '3px' }}>{text}</p>
@@ -111,9 +182,21 @@ function SingleBookPage({allBooks, onRefresh}){
                     </div>
 
                     <div className="book-meta">
-                        <p><strong>Published:</strong> {book.year}</p>
-                        <p><strong>Year Read:</strong> {book.year_read}</p>
-                        <p><strong>Pages:</strong> {book.pages || 'N/A'}</p>
+                        <div className="editable-item">
+                            <p><strong>Published:</strong> {book.year}</p>
+                            <button className="edit-btn-inline" onClick={() => editElement("Book", 'year', book.year)}>
+                                ✏️
+                            </button>
+                        </div>
+
+                        <p><strong>Year {isRecommended ? "recommended" : "read"}:</strong> {book.year_read}</p>
+
+                        <div className="editable-item">
+                            <p><strong>Pages:</strong> {book.pages || 'N/A'}</p>
+                            <button className="edit-btn-inline" onClick={() => editElement("Book", 'pages', book.pages)}>
+                                ✏️
+                            </button>
+                        </div>      
                     </div>
                 </div> 
             </div>
@@ -141,9 +224,19 @@ function SingleBookPage({allBooks, onRefresh}){
                                 <button className="remove-review" onClick={() => deleteReview(index)}>Remove Review</button>
                                 <div className="review-header">
                                     <strong>{rev.user}</strong>
-                                    <span className="rating">⭐ {rev.rating}</span>
+                                    <div className="rating-group">
+                                        <span className="rating">⭐ {rev.rating}</span>
+                                        <button className="edit-btn-inline" onClick={() => editElement("Review", 'rating', rev.rating, index)}>
+                                            ✏️
+                                        </button>
+                                    </div>
                                 </div>
-                                <p className="review-comment">"{rev.comment}"</p>
+                                <div className="comment-group">
+                                    <p className="review-comment">"{rev.comment}"</p>
+                                    <button className="edit-btn-inline" onClick={() => editElement("Review", 'comment', rev.comment, index)}>
+                                        ✏️
+                                    </button>
+                                </div>
                             </div>
                         ))
                     ) : (
@@ -151,6 +244,16 @@ function SingleBookPage({allBooks, onRefresh}){
                     )}
                 </div>
             )}       
+
+            {isEditOpen && (
+                <ModifyElement 
+                    entityType= {editType}
+                    fieldName = {editValue} 
+                    initialValue = {initialValue}
+                    onSave={onEditSave} 
+                    onClose={() => setIsEditOpen(false)}
+                />
+            )}
         </div>
     );
 

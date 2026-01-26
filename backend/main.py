@@ -54,13 +54,9 @@ def get_session():
 
 
 @app.get("/books")
-def get_books(status: Optional[str] = None, year: Optional[int] = None, session: Session = Depends(get_session)):
+def get_books(year: Optional[int] = None, session: Session = Depends(get_session)):
     statement = select(Book)
-    if status and year:
-        statement = statement.where((Book.status == status) and (Book.year_read == year))
-    elif status:
-        statement = statement.where(Book.status == status)
-    elif year:
+    if year is not None:
         statement = statement.where(Book.year_read == year)
     results = session.exec(statement)
     return results.all()

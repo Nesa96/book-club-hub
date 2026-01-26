@@ -5,13 +5,14 @@ import StatsPage from './views/StatsPage';
 import NextBook from './views/NextBook';
 import SingleBookPage from './views/SingleBookPage';
 import Layout from './components/Layout';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
 
     const [books, setBooks] = useState([]);
     const [stats, setStats] = useState(null);
     const [loading, setLoading] = useState(true);
+    const actual_year = new Date().getFullYear();
 
     // Get all the info
     async function fetchAllData() {
@@ -46,7 +47,7 @@ function App() {
                 <Routes>
                     <Route element={<Layout onRefresh={fetchAllData}/>}>
                         <Route index element={<BooksPage 
-                                               books={books.filter(b => b.status === 'read')} 
+                                               books={books.filter(b => (b.status === 'read') && (b.year_read == actual_year))} 
                                                onRefresh={fetchAllData}/>} />
                         <Route path="next-book" element={<NextBook 
                                                           recBooks={books.filter(b => b.status === 'recommended')}
