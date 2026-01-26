@@ -16,16 +16,19 @@ function AddReview({ bookId, currentReviews, onRefresh, onClose }) {
 
         const reviewToSend = {
             ...newReview,
-            rating: ratingFloat // Ahora sí va como número
+            rating: ratingFloat 
         };
 
         const updatedReviews = [...(currentReviews || []), reviewToSend];
+
+        const totalScore = updatedReviews.reduce((sum, rev) => sum + rev.rating, 0);
+        const new_media_review = (totalScore / updatedReviews.length).toFixed(2);
 
         try {
             const response = await fetch(`http://localhost:8000/books/${bookId}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ reviews: updatedReviews })
+                body: JSON.stringify({ reviews: updatedReviews, media_rating:new_media_review})
             });
 
             if (response.ok) {

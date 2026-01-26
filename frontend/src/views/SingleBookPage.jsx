@@ -42,13 +42,15 @@ function SingleBookPage({allBooks, onRefresh}){
         const confirmed = window.confirm("Are you sure you want to delete this review?");
         if (!confirmed) return;
 
-        const updatedReviews = book.reviews.filter((_, index) => index !== indexToDelete)
+        const updatedReviews = book.reviews.filter((_, index) => index !== indexToDelete);
+        const totalScore = updatedReviews.reduce((sum, rev) => sum + rev.rating, 0);
+        const new_media_review = (totalScore / updatedReviews.length).toFixed(1);
 
         try {
             const response = await fetch(`http://localhost:8000/books/${book.id}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ reviews: updatedReviews })
+                body: JSON.stringify({ reviews: updatedReviews, media_rating: new_media_review })
             });
 
             if (response.ok) {
@@ -73,8 +75,24 @@ function SingleBookPage({allBooks, onRefresh}){
 
             <div className="book-main-content"> 
 
-                <div className='book-detail-image'>
+                <div className='book-details'>
                     <img src={book.cover_url} alt={`${book.title} cover`} />
+
+                    {!isRecommended && book.media_rating !== undefined && (
+                        <div className="book-average-rating">
+                            <div className="stars-container">
+                                <div className="stars-empty">
+                                    <span>★★★★★</span>
+                                </div>
+                                <div 
+                                    className="stars-filled" 
+                                    style={{ width: `${(book.media_rating / 5) * 100}%` }}
+                                >
+                                    <span>★★★★★</span>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 <div className='book-detail-info'>

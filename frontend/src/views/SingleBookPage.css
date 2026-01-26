@@ -54,12 +54,43 @@
         margin-bottom: 40px;
         align-items: flex-start;
 
-        .book-detail-image img {
-            width: 220px; 
-            border-radius: 8px;
-            box-shadow: 10px 10px 20px rgba(0,0,0,0.1);
-            display: block;
-        }
+        .book-details {
+            
+            img {
+                width: 220px; 
+                border-radius: 8px;
+                box-shadow: 10px 10px 20px rgba(0,0,0,0.1);
+                display: block;
+            }
+
+            .book-average-rating {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                margin: 15px 0;
+
+                .stars-container {
+                    position: relative;
+                    display: inline-block;
+                    font-size: 1.5rem; 
+                    letter-spacing: 2px;
+                    margin: auto;
+
+                    .stars-empty {
+                        color: #e0e0e0; 
+                    }
+
+                    .stars-filled {
+                        color: #ffb800; 
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        white-space: nowrap;
+                        overflow: hidden; 
+                    }
+                }
+            }
+        }   
 
         .book-detail-info {
             flex: 1;
