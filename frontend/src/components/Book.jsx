@@ -1,6 +1,6 @@
 import './Book.css';
 
-function Book({data, onRefresh}){
+function Book({data}){
 
     return (
 

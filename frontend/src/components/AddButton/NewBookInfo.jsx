@@ -30,7 +30,8 @@ function NewBookInfo({ type, onClose, onRefresh}) {
         
         setIsLoading(true);
         try {
-            const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:${formData.title}+inauthor:${formData.author}`);
+            const API_KEY = "AIzaSyBthG4VcTL580C0Q5NqmKyZbCmmUs7mftk";
+            const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:${formData.title}+inauthor:${formData.author}&key=${API_KEY}`);
             const data = await response.json();
             
             if (data.items && data.items.length > 0) {
