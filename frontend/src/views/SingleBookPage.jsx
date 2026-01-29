@@ -45,6 +45,29 @@ function SingleBookPage({allBooks, onRefresh}){
         }
     };
 
+    async function backToRec() {
+        const confirmed = window.confirm("Are you sure you want to put this book back in the next book section?");
+        if (!confirmed) return;
+
+        try {
+            const response = await fetch(`${API_URL}/books/${id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({status: 'recommended'})
+            });
+
+            if (response.ok) {
+                onRefresh(); 
+                isRecommended ? navigate('/next-book') : navigate('/');; 
+                console.log("Book move successfully");
+            } else {
+                alert("Failed to move the book. Please try again.");
+            }
+        } catch (error) {
+            console.error("Error moving book:", error);
+        }
+    };
+
     async function deleteReview(indexToDelete) {
         const confirmed = window.confirm("Are you sure you want to delete this review?");
         if (!confirmed) return;
@@ -130,15 +153,25 @@ function SingleBookPage({allBooks, onRefresh}){
                     {isRecommended ? "← Back to next book page" : "← Back to all books page"}
                 </button>
 
-                <button className="remove-book" onClick={removeBook}>
-                        REMOVE BOOK
-                </button>
+                <div className='change-btns'>
+                    <button className="remove-book" onClick={removeBook}>
+                            REMOVE BOOK
+                    </button>
+                    <button className="back-to-recommended" onClick={backToRec}>
+                            BACK TO RECOMMENDED
+                    </button>
+                </div>
             </div>
 
             <div className="book-main-content"> 
 
                 <div className='book-details'>
-                    <img src={book.cover_url} alt={`${book.title} cover`} />
+                    <div className="editable-group">
+                        <img src={book.cover_url} alt={`${book.title} cover`} />
+                        <button className="edit-btn-inline" onClick={() => editElement("Book", 'cover_url', book.cover_url)}>
+                            ✏️
+                        </button>
+                    </div>
 
                     {!isRecommended && book.media_rating !== undefined && book.media_rating !== null && (
                         <div className="book-average-rating">
@@ -158,11 +191,34 @@ function SingleBookPage({allBooks, onRefresh}){
                 </div>
 
                 <div className='book-detail-info'>
-                    <div className="editable-group">
-                        <span className="book-category">{book.genre || 'Other'}</span>
-                        <button className="edit-btn-inline" onClick={() => editElement("Book", 'genre', book.genre)}>
-                            ✏️
-                        </button>
+                    <div className="category-month-row">
+                        <div className="editable-group">
+                            <span className="book-category">{book.genre || 'Other'}</span>
+                            <button className="edit-btn-inline" onClick={() => editElement("Book", 'genre', book.genre)}>
+                                ✏️
+                            </button>
+                        </div>
+
+                        {!isRecommended && (
+                            <div className="month-read-section">
+                                {book.month_read ? (
+                                    <div className="editable-group">
+                                        <span className="book-month">
+                                            Read in: <strong>{book.month_read}</strong>
+                                        </span>
+                                        <button className="edit-btn-inline" onClick={() => editElement("Book", 'month_read', book.month_read)}>
+                                            ✏️
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div className="set-month-inline">
+                                        <button className="edit-btn-inline" onClick={() => editElement("Book", 'month_read', book.month_read)}>
+                                            Check when read - month
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        )}
                     </div>
                     <h1>{book.title}</h1>
                     <h2 className="book-author">by {book.author}</h2>

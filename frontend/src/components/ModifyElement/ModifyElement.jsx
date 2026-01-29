@@ -31,7 +31,7 @@ function ModifyElement({ entityType, fieldName, initialValue, onSave, onClose })
     return (
         <div className="review-overlay">
             <div className="modify-content">
-                <h3>Edit {entityType} {fieldName}</h3>
+                <h3>Edit {entityType} {fieldName.replace("_", " ")}</h3>
                 <div className="input-wrapper">
                     {renderInput()}
                 </div>

@@ -33,6 +33,7 @@ class Book(SQLModel, table=True):
     title: str
     author: str
     year_read: int
+    month_read: Optional[str] = None
     year: Optional[int]
     cover_url: str
     status: str # "read" o "recommended"
@@ -40,7 +41,7 @@ class Book(SQLModel, table=True):
     pages: Optional[int] = 0
     summary: Optional[str] = None
     reviews: List[Dict] = Field(default=[], sa_column=Column(JSON))
-    media_rating: Optional[int]
+    media_rating: Optional[float]
 
 
 #SQLite in case you want a local database - no need for the env file then
