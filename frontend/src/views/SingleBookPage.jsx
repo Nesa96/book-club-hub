@@ -28,7 +28,7 @@ function SingleBookPage({allBooks, onRefresh}){
         if (!confirmed) return;
 
         try {
-            const response = await fetch(`http://localhost:8000/books/${id}`, {
+            const response = await fetch(`${API_URL}/books/${id}`, {
                 method: 'DELETE',
             });
 
@@ -53,7 +53,7 @@ function SingleBookPage({allBooks, onRefresh}){
         const new_media_review = (totalScore / updatedReviews.length).toFixed(1);
 
         try {
-            const response = await fetch(`http://localhost:8000/books/${book.id}`, {
+            const response = await fetch(`${API_URL}/books/${book.id}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ reviews: updatedReviews, media_rating: new_media_review })
@@ -96,7 +96,7 @@ function SingleBookPage({allBooks, onRefresh}){
         }
 
         try {
-            const response = await fetch(`http://localhost:8000/books/${id}`, {
+            const response = await fetch(`${API_URL}/books/${id}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)

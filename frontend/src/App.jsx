@@ -6,10 +6,9 @@ import NextBook from './views/NextBook';
 import SingleBookPage from './views/SingleBookPage';
 import Layout from './components/Layout';
 import { useEffect, useState } from 'react';
+import { API_URL } from '../config';
 
 function App() {
-
-    const API_URL = "https://book-club-uqix.onrender.com";
 
     const [books, setBooks] = useState([]);
     const [stats, setStats] = useState(null);

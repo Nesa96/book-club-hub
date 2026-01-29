@@ -60,7 +60,7 @@ function NewBookInfo({ type, onClose, onRefresh}) {
         };
 
         try {
-            const response = await fetch('http://localhost:8000/books', {
+            const response = await fetch(`${API_URL}/books`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(bookData),

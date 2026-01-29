@@ -2,6 +2,7 @@ import { useState } from "react";
 import Book from "../components/Book";
 import { Link } from 'react-router-dom';
 import './NextBook.css';
+import { API_URL } from '../config';
 
 function NextBook({recBooks, onRefresh}){
 
@@ -16,7 +17,7 @@ function NextBook({recBooks, onRefresh}){
 
     async function confirmSelection() {
         try {
-            const response = await fetch(`http://localhost:8000/books/${selectNextBook.id}`, {
+            const response = await fetch(`${API_URL}/books/${selectNextBook.id}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 

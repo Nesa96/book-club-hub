@@ -25,7 +25,7 @@ function AddReview({ bookId, currentReviews, onRefresh, onClose }) {
         const new_media_review = (totalScore / updatedReviews.length).toFixed(2);
 
         try {
-            const response = await fetch(`http://localhost:8000/books/${bookId}`, {
+            const response = await fetch(`${API_URL}/books/${bookId}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ reviews: updatedReviews, media_rating:new_media_review})
