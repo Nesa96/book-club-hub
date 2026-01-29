@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './NewBookInfo.css';
+import { API_URL } from '../../config.js'
 
 function NewBookInfo({ type, onClose, onRefresh}) {
 

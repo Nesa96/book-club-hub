@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './AddReview.css';
+import { API_URL } from  "../../config.js"
 
 function AddReview({ bookId, currentReviews, onRefresh, onClose }) {
     const [newReview, setNewReview] = useState({ user: '', rating: '', comment: '' });

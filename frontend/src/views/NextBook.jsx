@@ -2,7 +2,7 @@ import { useState } from "react";
 import Book from "../components/Book";
 import { Link } from 'react-router-dom';
 import './NextBook.css';
-import { API_URL } from '../config';
+import { API_URL } from '../config.js';
 
 function NextBook({recBooks, onRefresh}){
 

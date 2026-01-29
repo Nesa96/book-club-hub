@@ -3,6 +3,7 @@ import './SingleBookPage.css';
 import { useState } from 'react';
 import AddReview from '../components/AddReview/AddReview';
 import ModifyElement from '../components/ModifyElement/ModifyElement';
+import { API_URL } from "../config.js"
 
 function SingleBookPage({allBooks, onRefresh}){
 

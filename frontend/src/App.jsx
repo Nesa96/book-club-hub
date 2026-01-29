@@ -6,7 +6,7 @@ import NextBook from './views/NextBook';
 import SingleBookPage from './views/SingleBookPage';
 import Layout from './components/Layout';
 import { useEffect, useState } from 'react';
-import { API_URL } from '../config';
+import { API_URL } from './config.js';
 
 function App() {
 
