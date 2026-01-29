@@ -3,9 +3,25 @@
     text-align: center;
 }
 
-.book-card img {
-  width: 100%; 
-  aspect-ratio: 2 / 3; 
-  object-fit: cover;
-  display: block;
+.book-card {
+  img {
+    width: 100%; 
+    aspect-ratio: 2 / 3; 
+    object-fit: cover;
+    display: block;
+  }
+
+  h2 {
+    background-color: #5d4037;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 4px 12px;
+    border-radius: 20px; 
+    display: inline-block;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
 }

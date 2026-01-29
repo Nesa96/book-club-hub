@@ -204,7 +204,7 @@ function SingleBookPage({allBooks, onRefresh}){
                                 {book.month_read ? (
                                     <div className="editable-group">
                                         <span className="book-month">
-                                            Read in: <strong>{book.month_read}</strong>
+                                            <strong>{book.month_read}</strong>
                                         </span>
                                         <button className="edit-btn-inline" onClick={() => editElement("Book", 'month_read', book.month_read)}>
                                             ✏️

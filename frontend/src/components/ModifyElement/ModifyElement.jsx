@@ -2,7 +2,7 @@ import { useState } from "react";
 import './ModifyElement.css';
 
 function ModifyElement({ entityType, fieldName, initialValue, onSave, onClose }) {
-    const [newValue, setNewValue] = useState(initialValue);
+    const [newValue, setNewValue] = useState(initialValue || "");
 
     const renderInput = () => {
         if (fieldName === 'comment' || fieldName === 'summary') {
