@@ -1,9 +1,12 @@
+import os
 from fastapi import FastAPI, HTTPException, Depends
 from typing import Optional, List, Dict
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
-from sqlmodel import Field, Session, SQLModel, create_engine, select, Column, JSON
+from sqlmodel import Field, Session, SQLModel, create_engine, select
+from sqlalchemy import Column, JSON
 from contextlib import asynccontextmanager
+from dotenv import load_dotenv
 
 # FAST API
 @asynccontextmanager
@@ -40,10 +43,18 @@ class Book(SQLModel, table=True):
     media_rating: Optional[int]
 
 
-#SQLite 
-sqlite_file_name = "books.db"
-sqlite_url = f"sqlite:///{sqlite_file_name}"
-engine = create_engine(sqlite_url, echo=True)
+#SQLite in case you want a local database - no need for the env file then
+# sqlite_file_name = "books.db"
+# sqlite_url = f"sqlite:///{sqlite_file_name}"
+# engine = create_engine(sqlite_url, echo=True)
+
+load_dotenv()
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
+engine = create_engine(DATABASE_URL, echo=True)
 
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
