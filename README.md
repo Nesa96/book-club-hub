@@ -49,6 +49,7 @@ pip install -r requirements.txt
 python main.py # or uvicorn main:app --reload
 # The tables will be created automatically in your DB 
 # the first time the server runs.
+```
 
 ## 🚀 Next Steps & Future Improvements
 
