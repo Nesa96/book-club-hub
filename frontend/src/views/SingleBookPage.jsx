@@ -157,9 +157,11 @@ function SingleBookPage({allBooks, onRefresh}){
                     <button className="remove-book" onClick={removeBook}>
                             REMOVE BOOK
                     </button>
-                    <button className="back-to-recommended" onClick={backToRec}>
-                            BACK TO RECOMMENDED
-                    </button>
+                    {!isRecommended &&
+                        <button className="back-to-recommended" onClick={backToRec}>
+                                BACK TO RECOMMENDED
+                        </button>
+                    }
                 </div>
             </div>
 
