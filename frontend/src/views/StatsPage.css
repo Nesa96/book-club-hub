@@ -92,6 +92,10 @@
         font-size: 2rem !important;
     }
 
+    p {
+        font-size: 1rem !important;
+    }
+
     .stats-grid .stat-card{  
             width: 95%;
     }

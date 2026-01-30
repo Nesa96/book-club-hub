@@ -3,7 +3,7 @@
     display: grid;
     grid-template-columns: repeat(6, 1fr); 
     gap: 20px;
-    padding-top: 20px;
+    padding: 20px 10px 0px 10px;
 }
 
 .book-card-link{
