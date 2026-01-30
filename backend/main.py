@@ -7,6 +7,7 @@ from sqlmodel import Field, Session, SQLModel, create_engine, select
 from sqlalchemy import Column, JSON
 from contextlib import asynccontextmanager
 from dotenv import load_dotenv
+from datetime import datetime
 
 # FAST API
 @asynccontextmanager
@@ -74,53 +75,55 @@ def get_books(year: Optional[int] = None, session: Session = Depends(get_session
     return results.all()
 
 @app.get("/stats")
-def get_stats(year: Optional[int] = None, session: Session = Depends(get_session)):
+def get_stats(session: Session = Depends(get_session)):
     statement = select(Book).where(Book.status == "read")
+    all_read_books = session.exec(statement).all()
 
-    if year:
-        statement = statement.where(Book.year_read == year)
+    all_stats = {}
+    actual_year = datetime.now().year
 
-    read_books = session.exec(statement).all()
+    books_by_year = {}
+    for b in all_read_books:
+        year = b.year_read or actual_year
+        if year not in books_by_year:
+            books_by_year[year] = []
+        books_by_year[year].append(b)
 
-    if not read_books:
-        return {
-            "total_books": 0,
-            "total_pages": 0,
-            "avg_rating": 0,
-            "genre_distribution": [],
-            "rating_distribution": [],
-            "longest_book": None
+    if not all_read_books:
+        return all_stats
+
+    for year, read_books in books_by_year.items():
+        total_books = len(read_books)
+        avg_rating = (sum(b.media_rating or 0 for b in read_books) / total_books) if total_books > 0 else 0
+        total_pages = sum(b.pages for b in read_books)
+
+        genre_map = {}
+        rating_map = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0}
+        for b in read_books:
+            cat = b.genre if b.genre else "Uncategorized"
+            if not cat in genre_map.keys():
+                genre_map[cat] = 0
+            genre_map[cat] += 1
+
+            if b.media_rating is not None:
+                floor_r = int(b.media_rating) 
+                if floor_r in rating_map:
+                    rating_map[floor_r] += 1
+        
+        genre_dist = [{'name': key, 'value': value} for key, value in genre_map.items()]
+        rating_dist = [{"stars": f"{k} ⭐", "count": v} for k, v in rating_map.items()]
+        longest = max(read_books, key=lambda b: b.pages if b.pages else 0)
+
+        all_stats[year] = {
+            "total_books": total_books,
+            "total_pages": total_pages,
+            "avg_rating": round(avg_rating, 2),
+            "genre_distribution": genre_dist,
+            "rating_distribution": rating_dist,
+            "longest_book": longest
         }
 
-    total_books = len(read_books)
-    avg_rating = sum(b.media_rating or 0 for b in read_books) / total_books
-    total_pages = sum(b.pages for b in read_books)
-
-    genre_map = {}
-    rating_map = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0}
-    for b in read_books:
-        cat = b.category if b.category else "Uncategorized"
-        if not cat in genre_map.keys():
-            genre_map[cat] = 0
-        genre_map[cat] += 1
-
-        if b.media_rating is not None:
-            floor_r = int(b.media_rating) 
-            if floor_r in rating_map:
-                rating_map[floor_r] += 1
-    
-    genre_dist = [{'name': key, 'value': value} for key, value in genre_map.items()]
-    rating_dist = [{"stars": f"{k} ⭐", "count": v} for k, v in rating_map.items()]
-    longest = max(read_books, key=lambda b: b.pages if b.pages else 0)
-
-    return {
-        "total_books": total_books,
-        "total_pages": total_pages,
-        "avg_rating": round(avg_rating, 2),
-        "genre_distribution": genre_dist,
-        "rating_distribution": rating_dist,
-        "longest_book": longest
-    }
+    return all_stats
 
 @app.post("/books", response_model=Book)
 def create_book(book: Book, session: Session = Depends(get_session)):

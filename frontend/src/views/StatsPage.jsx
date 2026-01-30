@@ -1,23 +1,27 @@
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import './StatsPage.css';
+import { useState } from 'react';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
 
-function StatsPage({stats, onRefresh}){
+function StatsPage({all_stats}){
 
-    if (!stats || stats.total_books === 0) return <div>No data to show yet. Keep reading!</div>;
+    const actual_year = new Date().getFullYear();
+    const [stats, setStats] = useState(all_stats[actual_year])
+
+    if (!stats || stats.total_books === 0) return <div> No data yet. Please start reading!</div>;
 
     return (
         <div className="stats-container">
-            <h1>Your Reading Wrapped 2026 📚</h1>
+            <h1>Our Wrapped {actual_year} 📚</h1>
 
             <div className="stats-grid">
                 <div className="stat-card">
-                    <h3>Total Pages</h3>
+                    <h3>Total Pages Read</h3>
                     <p className="stat-number">{stats.total_pages}</p>
                 </div>
                 <div className="stat-card">
-                    <h3>Avg Rating</h3>
+                    <h3>Media Rating</h3>
                     <p className="stat-number">{stats.avg_rating} ⭐</p>
                 </div>
                 <div className="stat-card">
@@ -28,9 +32,8 @@ function StatsPage({stats, onRefresh}){
             </div>
 
             <div className="charts-section">
-                {/* Punto 2: Genre DNA */}
                 <div className="chart-box">
-                    <h3>Genre DNA</h3>
+                    <h3>Our genres</h3>
                     <ResponsiveContainer width="100%" height={300}>
                         <PieChart>
                             <Pie
@@ -50,9 +53,8 @@ function StatsPage({stats, onRefresh}){
                     </ResponsiveContainer>
                 </div>
 
-                {/* Punto 2: Critic Spirit */}
                 <div className="chart-box">
-                    <h3>Rating Distribution</h3>
+                    <h3>Rating count</h3>
                     <ResponsiveContainer width="100%" height={300}>
                         <BarChart data={stats.rating_distribution}>
                             <XAxis dataKey="stars" />
