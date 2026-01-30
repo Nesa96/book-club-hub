@@ -49,3 +49,13 @@ pip install -r requirements.txt
 python main.py # or uvicorn main:app --reload
 # The tables will be created automatically in your DB 
 # the first time the server runs.
+
+## 🚀 Next Steps & Future Improvements
+
+### 🛠️ UX & UI improvements
+- [ ] **Skeleton Screens**: Add loading screens.
+- [ ] **Confirm windows**: Modify the `window.confirm` for something more personal.
+- [ ] **Dark Mode**: Add option to dark mode.
+
+### 📚 New functionalities
+- [ ] **Users system**: Only been able add or delete books or reviews if you are an user.
