@@ -7,7 +7,7 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
 function StatsPage({all_stats}){
 
     const actual_year = new Date().getFullYear();
-    const [stats, setStats] = useState(all_stats[actual_year])
+    const [stats, setStats] = useState(all_stats ? all_stats[actual_year] : null)
 
     if (!stats || stats.total_books === 0) return <div> No data yet. Please start reading!</div>;
 
@@ -26,8 +26,8 @@ function StatsPage({all_stats}){
                 </div>
                 <div className="stat-card">
                     <h3>Longest Read</h3>
-                    <p className="stat-title">{stats.longest_book.title}</p>
-                    <p className="stat-subtitle">{stats.longest_book.pages} pages</p>
+                    <p className="stat-title">{stats.longest_book?.title}</p>
+                    <p className="stat-subtitle">{stats.longest_book?.pages} pages</p>
                 </div>
             </div>
 
