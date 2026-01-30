@@ -63,10 +63,6 @@
         grid-template-columns: repeat(2, 1fr);
         gap: 2rem;
 
-        @media (max-width: 900px) {
-            grid-template-columns: 1fr;
-        }
-
         .chart-box {
             background: #ffffff;
             padding: 1.5rem;
@@ -81,5 +77,26 @@
                 text-align: center;
             }
         }
+    }
+}
+
+@media (max-width: 900px) {
+    .stats-container .charts-section {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+
+    h1 {
+        font-size: 2rem !important;
+    }
+
+    .stats-grid .stat-card{  
+            width: 95%;
+    }
+
+    .charts-section .chart-box {
+            padding: 15px !important; 
     }
 }

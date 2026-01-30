@@ -1,5 +1,7 @@
 
 .next-book-page { 
+
+    padding-top: 15px;
     
     .next-book-btn {
 
@@ -60,5 +62,32 @@
                 }
             }
        }
+    }
+}
+
+@media (max-width: 600px) {
+
+    .next-book-page {
+        
+        .next-book-btn .pick-btn {
+            padding: 8px 16px;
+            font-size: 1rem;
+        }
+
+        .next-book-pop-up {
+            .next-book-content {
+
+                padding: 20px;
+                max-width: 300px;
+
+                h2 {font-size: 1rem;}
+
+                h1 { font-size: 1.5rem !important;}
+
+                .next-book-options button {
+                        padding: 8px 16px;
+                } 
+            }
+        }
     }
 }

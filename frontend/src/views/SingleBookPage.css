@@ -227,9 +227,115 @@
 
 @keyframes modalFadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
     .single-book-container {
-        max-width: 95%;
-        .book-main-content { flex-direction: column; align-items: center; text-align: center; gap: 20px; }
+        max-width: 99%; 
+        margin: 20px auto;
+        padding: 0 5px;
+
+        .top-bar {
+            flex-direction: column;
+            gap: 5px;
+            align-items: flex-start;
+            align-items: center;
+            margin-bottom: 5px;
+
+            .back-button {
+                font-size: 0.8rem;
+            }
+
+            .change-btns {
+                flex-direction: row;
+                justify-content: space-between;
+                width: 100%;
+                
+                button {
+                    font-size: 0.7rem;
+                    padding: 5px;
+                }
+            }
+        }
+
+        .book-main-content {
+            flex-direction: column; 
+            align-items: center;
+            padding: 20px 15px;
+            gap: 20px;
+
+            .book-details {
+                margin-bottom: -20px;
+
+                img {
+                    width: 180px;
+                    margin-left: 25px;
+                }
+                
+                .book-average-rating {
+                    justify-content: center;
+                    .stars-container { font-size: 1.2rem; }
+                }
+            }
+
+            .book-detail-info {
+                width: 100%;
+                text-align: center;
+
+                .category-month-row {
+                    order: -1; 
+                    margin-bottom: 15px;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    gap: 10px;
+                }
+
+                .editable-group {
+                    margin-left: 15px;
+                    justify-content: center;
+
+                    .edit-btn-inline {
+                        font-size: 0.5rem;
+                    }
+                }
+
+                h1 {
+                    font-size: 1.5rem !important;
+                    margin: 10px 0;
+                }
+
+                .book-author {
+                    font-size: 1rem !important;
+                    margin-bottom: 15px;
+                }
+
+                .book-description {
+                    h3 { font-size: 0.9rem !important; }
+                    p {
+                        font-size: 0.6rem !important; 
+                        line-height: 1.4;
+                        text-align: justify;
+                    }
+                }
+
+                .book-meta {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    font-size: 0.7rem;
+
+                    .editable-item {
+                        margin-left: 25px;
+                    }
+                }
+            }
+        }
+
+        .book-reviews-section {
+            h3 { font-size: 1.1rem !important; }
+            .review-card {
+                .review-comment {
+                    font-size: 0.85rem !important;
+                }
+            }
+        }
     }
 }

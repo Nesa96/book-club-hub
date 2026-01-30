@@ -23,6 +23,14 @@
             letter-spacing: -0.5px;
         }
 
+        .menu-toggle {
+            display: none;
+        }
+
+        .nav-overlay { 
+            display: none;
+        }
+
         .header-nav {
             display: flex;
             gap: 15px;
@@ -51,9 +59,64 @@
 }
 
 /* Movile */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
     .main-header .header-container {
-        flex-direction: column;
         gap: 15px;
+        padding: 0 30px;
+
+        .header-brand h1{ font-size: 1rem !important;}
+
+        .menu-toggle {
+            display: block; 
+            background: none;
+            border: none;
+            font-size: 1rem;
+
+            &.open {
+                z-index: 10001 !important;
+                position: fixed; 
+                top: 5px;
+                right: 5px;
+                font-size: 0.8rem;
+            }
+        }
+
+        .nav-overlay {
+            background-color: transparent;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .header-nav {
+            position: fixed;
+            top: 0;
+            right: -100%; 
+            width: 100px;
+            background: white;
+            flex-direction: column;
+            padding: 20px 5px 5px 5px;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            transition: right 0.3s ease-in-out; 
+            z-index: 10000;
+
+            &.open {
+                right: 0;
+            }
+            .nav-link {
+                font-size: 0.8rem;
+                color: #8f9394;
+                font-weight: 500;
+                padding: 1px 2px;
+                text-align: center;
+
+                &.active {
+                    background-color:white;
+                    color: black;
+                }
+            }
+        }
     }
 }

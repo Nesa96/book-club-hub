@@ -1,9 +1,6 @@
-
 .book-card {
-    text-align: center;
-}
+  text-align: center;
 
-.book-card {
   img {
     width: 100%; 
     aspect-ratio: 2 / 3; 
@@ -24,4 +21,15 @@
     margin-bottom: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
+}
+
+@media (max-width: 600px) {
+
+    h3 {
+      font-size: 0.9rem !important;
+    }
+
+    p {
+      font-size: 0.7rem !important;
+    }
 }

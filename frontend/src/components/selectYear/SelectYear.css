@@ -16,9 +16,20 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
     .year-selector {
-        display: flex;
-        align-items: center;
+        display: block;
+        text-align: center;
+
+        .minimal-select {
+            background-color: white;
+            border: 1px solid #f5f2ef;
+            color: #8f9394;
+            font-size: 0.8rem;
+
+            &:hover {
+                background-color: white;
+            }
+        }
     }
 }
