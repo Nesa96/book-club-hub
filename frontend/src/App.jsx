@@ -13,7 +13,11 @@ function App() {
     const [books, setBooks] = useState([]);
     const [stats, setStats] = useState(null);
     const [loading, setLoading] = useState(true);
-    const actual_year = new Date().getFullYear();
+    const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+
+    const availableYears = books.length > 0 
+        ? [...new Set(books.filter(b => b.year_read).map(b => b.year_read))].sort((a, b) => b - a)
+        : [new Date().getFullYear()];
 
     // Get all the info
     async function fetchAllData() {
@@ -46,14 +50,17 @@ function App() {
         <div className='main-wrapper'>
             <BrowserRouter>
                 <Routes>
-                    <Route element={<Layout onRefresh={fetchAllData}/>}>
+                    <Route element={<Layout totalYears={availableYears} 
+                                            selectedYear={selectedYear}
+                                            setSelectedYear={setSelectedYear} 
+                                            onRefresh={fetchAllData}/>}>
                         <Route index element={<BooksPage 
-                                               books={books.filter(b => (b.status === 'read') && (b.year_read == actual_year))} 
+                                               books={books.filter(b => (b.status === 'read') && (b.year_read == selectedYear))} 
                                                onRefresh={fetchAllData}/>} />
                         <Route path="next-book" element={<NextBook 
                                                           recBooks={books.filter(b => b.status === 'recommended')}
                                                           onRefresh={fetchAllData}/>} />
-                        <Route path="stats" element={<StatsPage stats = {stats ? stats[actual_year] : null} choosen_year={actual_year}/>} />
+                        <Route path="stats" element={<StatsPage stats = {stats ? stats[selectedYear] : null} choosen_year={selectedYear}/>} />
                     </Route>
                     <Route path="/book/:id" element={<SingleBookPage allBooks={books} onRefresh={fetchAllData}/>} />
                 </Routes>

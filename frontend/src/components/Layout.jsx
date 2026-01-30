@@ -3,7 +3,7 @@ import Header from './Header/Header';
 import { useState } from 'react';
 import NewBookInfo from './AddButton/NewBookInfo';
 
-const Layout = ({onRefresh}) => {
+const Layout = ({totalYears, selectedYear, setSelectedYear, onRefresh}) => {
 
     const [isAddBookOpen, setIsAddBookOpen] = useState(false);
     const [bookType, setBookType] = useState("read");
@@ -20,7 +20,11 @@ const Layout = ({onRefresh}) => {
 
   return (
     <div>
-      <Header onAddRead={() => openAddBook("read")} onAddRecommended={() => openAddBook("recommended")}/>
+      <Header onAddRead={() => openAddBook("read")} 
+              onAddRecommended={() => openAddBook("recommended")} 
+              selectedYear={selectedYear}
+              totalYears={totalYears} 
+              setSelectedYear={setSelectedYear}/>
       <main className="page-content">
         <Outlet />
       </main>

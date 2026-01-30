@@ -1,8 +1,9 @@
 import { NavLink, useLocation } from "react-router-dom";
 import './Header.css';
 import AddButton from '../AddButton/AddButton.jsx';
+import SelectYear from "../selectYear/SelectYear.jsx";
 
-function Header({ onAddRead, onAddRecommended }) {
+function Header({ onAddRead, onAddRecommended, selectedYear, totalYears, setSelectedYear}) {
 
     const location = useLocation();
 
@@ -33,6 +34,7 @@ function Header({ onAddRead, onAddRecommended }) {
                         Statistics
                     </NavLink>
                     <AddButton onAddRead={onAddRead} onAddRecommended={onAddRecommended} />
+                    <SelectYear totalYears={totalYears} selectedYear={selectedYear} setSelectedYear={setSelectedYear} />
                 </nav>
             </div>
         </header>
