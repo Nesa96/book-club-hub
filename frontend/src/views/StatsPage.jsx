@@ -2,7 +2,9 @@ import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveCo
 import './StatsPage.css';
 import { useState } from 'react';
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
+const GENRE_COLORS = ['#dfd2c3', '#92816f', '#d4beab', '#97816f', '#7a7269'];
+const SIZE_COLORS = ['#b6dab1', '#789474', '#91c082'];
+const BAR_COLOR = '#7295a7'
 
 function StatsPage({all_stats}){
 
@@ -13,7 +15,7 @@ function StatsPage({all_stats}){
 
     return (
         <div className="stats-container">
-            <h1>Our Wrapped {actual_year} 📚</h1>
+            <h1>Our Wrapped {actual_year} 📖</h1>
 
             <div className="stats-grid">
                 <div className="stat-card">
@@ -33,18 +35,18 @@ function StatsPage({all_stats}){
 
             <div className="charts-section">
                 <div className="chart-box">
-                    <h3>Our genres</h3>
+                    <h3>Book genres</h3>
                     <ResponsiveContainer width="100%" height={300}>
                         <PieChart>
                             <Pie
                                 data={stats.genre_distribution}
-                                innerRadius={60}
+                                innerRadius={40}
                                 outerRadius={80}
-                                paddingAngle={5}
+                                paddingAngle={1}
                                 dataKey="value"
                             >
                                 {stats.genre_distribution.map((entry, index) => (
-                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                    <Cell key={`cell-${index}`} fill={GENRE_COLORS[index % GENRE_COLORS.length]} />
                                 ))}
                             </Pie>
                             <Tooltip />
@@ -60,8 +62,41 @@ function StatsPage({all_stats}){
                             <XAxis dataKey="stars" />
                             <YAxis />
                             <Tooltip />
-                            <Bar dataKey="count" fill="#8884d8" radius={[4, 4, 0, 0]} />
+                            <Bar dataKey="count" fill={BAR_COLOR} radius={[4, 4, 0, 0]} />
                         </BarChart>
+                    </ResponsiveContainer>
+                </div>
+
+                <div className="chart-box">
+                    <h3>Author winners</h3>
+                    <ResponsiveContainer width="100%" height={300}>
+                        <BarChart data = {stats.author_top}>
+                            <XAxis dataKey="name" axisLine={false} tickLine={false} />
+                            <YAxis hide/>
+                            <Tooltip cursor={{fill: 'transparent'}} />
+                            <Bar dataKey="total_books" fill={BAR_COLOR} radius={[4, 4, 0, 0]} />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
+
+                <div className="chart-box">
+                    <h3>Book sizes</h3>
+                    <ResponsiveContainer width="100%" height={300}>
+                        <PieChart>
+                            <Pie
+                                data={stats.long_total}
+                                innerRadius={0}
+                                outerRadius={100}
+                                paddingAngle={0}
+                                dataKey="value"
+                            >
+                                {stats.long_total.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={SIZE_COLORS[index % SIZE_COLORS.length]} />
+                                ))}
+                            </Pie>
+                            <Tooltip />
+                            <Legend />
+                        </PieChart>
                     </ResponsiveContainer>
                 </div>
             </div>

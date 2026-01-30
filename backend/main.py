@@ -93,12 +93,16 @@ def get_stats(session: Session = Depends(get_session)):
         return all_stats
 
     for year, read_books in books_by_year.items():
+        rated_books = [read_book for read_book in read_books if read_book.media_rating]
         total_books = len(read_books)
-        avg_rating = (sum(b.media_rating or 0 for b in read_books) / total_books) if total_books > 0 else 0
+        total_rated_books = len(rated_books)
+        avg_rating = (sum(b.media_rating or 0 for b in read_books) / total_rated_books) if total_rated_books > 0 else 0
         total_pages = sum(b.pages for b in read_books)
 
         genre_map = {}
         rating_map = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0}
+        author_rating = {}
+        size_map = {'short': 0, 'medium': 0, 'long': 0}
         for b in read_books:
             cat = b.genre if b.genre else "Uncategorized"
             if not cat in genre_map.keys():
@@ -109,18 +113,35 @@ def get_stats(session: Session = Depends(get_session)):
                 floor_r = int(b.media_rating) 
                 if floor_r in rating_map:
                     rating_map[floor_r] += 1
+
+                if b.author not in author_rating.keys():
+                    author_rating[b.author] = []
+                author_rating[b.author].append(b.media_rating)
+
+            if b.pages < 200:
+                size_map['short'] += 1
+            elif b.pages < 500:
+                size_map['medium'] += 1
+            else:
+                size_map['long'] += 1
+
         
-        genre_dist = [{'name': key, 'value': value} for key, value in genre_map.items()]
-        rating_dist = [{"stars": f"{k} ⭐", "count": v} for k, v in rating_map.items()]
+        genre_total = [{'name': k_genre, 'value': v_genre} for k_genre, v_genre in genre_map.items()]
+        rating_total = [{"stars": f"{k_rating} ⭐", "count": v_rating} for k_rating, v_rating in rating_map.items()]
         longest = max(read_books, key=lambda b: b.pages if b.pages else 0)
+        author_total = [{'name': k_author, 'total_books': sum(v_author)/len(v_author)} for k_author, v_author in author_rating.items()]
+        author_top = sorted(author_total, key=lambda x: x['total_books'], reverse= True)[:3]
+        long_total = [{'name': k_size, 'value': v_size} for k_size, v_size in size_map.items()]
 
         all_stats[year] = {
             "total_books": total_books,
             "total_pages": total_pages,
             "avg_rating": round(avg_rating, 2),
-            "genre_distribution": genre_dist,
-            "rating_distribution": rating_dist,
-            "longest_book": longest
+            "genre_distribution": genre_total,
+            "rating_distribution": rating_total,
+            "longest_book": longest,
+            "author_top": author_top,
+            "long_total": long_total
         }
 
     return all_stats
