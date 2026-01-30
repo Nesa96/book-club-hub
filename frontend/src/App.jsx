@@ -53,7 +53,7 @@ function App() {
                         <Route path="next-book" element={<NextBook 
                                                           recBooks={books.filter(b => b.status === 'recommended')}
                                                           onRefresh={fetchAllData}/>} />
-                        <Route path="stats" element={<StatsPage all_stats={stats}/>} />
+                        <Route path="stats" element={<StatsPage stats = {stats ? stats[actual_year] : null} choosen_year={actual_year}/>} />
                     </Route>
                     <Route path="/book/:id" element={<SingleBookPage allBooks={books} onRefresh={fetchAllData}/>} />
                 </Routes>

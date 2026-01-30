@@ -1,21 +1,17 @@
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import './StatsPage.css';
-import { useState } from 'react';
 
 const GENRE_COLORS = ['#dfd2c3', '#92816f', '#d4beab', '#97816f', '#7a7269'];
 const SIZE_COLORS = ['#b6dab1', '#789474', '#91c082'];
 const BAR_COLOR = '#7295a7'
 
-function StatsPage({all_stats}){
-
-    const actual_year = new Date().getFullYear();
-    const [stats, setStats] = useState(all_stats ? all_stats[actual_year] : null)
+function StatsPage({stats, choosen_year}){
 
     if (!stats || stats.total_books === 0) return <div> No data yet. Please start reading!</div>;
 
     return (
         <div className="stats-container">
-            <h1>Our Wrapped {actual_year} 📖</h1>
+            <h1>Our Wrapped {choosen_year} 📖</h1>
 
             <div className="stats-grid">
                 <div className="stat-card">
