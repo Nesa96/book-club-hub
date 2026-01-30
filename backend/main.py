@@ -81,11 +81,45 @@ def get_stats(year: Optional[int] = None, session: Session = Depends(get_session
         statement = statement.where(Book.year_read == year)
 
     read_books = session.exec(statement).all()
-    avg_rating = sum(b.media_rating or 0 for b in read_books) / len(read_books) if read_books else 0
+
+    if not read_books:
+        return {
+            "total_books": 0,
+            "total_pages": 0,
+            "avg_rating": 0,
+            "genre_distribution": [],
+            "rating_distribution": [],
+            "longest_book": None
+        }
+
+    total_books = len(read_books)
+    avg_rating = sum(b.media_rating or 0 for b in read_books) / total_books
+    total_pages = sum(b.pages for b in read_books)
+
+    genre_map = {}
+    rating_map = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0}
+    for b in read_books:
+        cat = b.category if b.category else "Uncategorized"
+        if not cat in genre_map.keys():
+            genre_map[cat] = 0
+        genre_map[cat] += 1
+
+        if b.media_rating is not None:
+            floor_r = int(b.media_rating) 
+            if floor_r in rating_map:
+                rating_map[floor_r] += 1
+    
+    genre_dist = [{'name': key, 'value': value} for key, value in genre_map.items()]
+    rating_dist = [{"stars": f"{k} ⭐", "count": v} for k, v in rating_map.items()]
+    longest = max(read_books, key=lambda b: b.pages if b.pages else 0)
+
     return {
-        "total_read": len(read_books),
-        "average_rating": round(avg_rating, 2),
-        "books_per_year": {2025: 2, 2026: 0} # Esto lo automatizaremos
+        "total_books": total_books,
+        "total_pages": total_pages,
+        "avg_rating": round(avg_rating, 2),
+        "genre_distribution": genre_dist,
+        "rating_distribution": rating_dist,
+        "longest_book": longest
     }
 
 @app.post("/books", response_model=Book)

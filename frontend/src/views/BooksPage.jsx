@@ -14,8 +14,6 @@ function BooksPage({books}){
         return monthA - monthB;
     })
 
-    console.log(books)
-
     return ( 
         <>
             <div className='books-container'>
