@@ -18,7 +18,7 @@ A professional web platform designed to manage a personal library, track reading
 **Frontend:**
 * React.js (Vite)
 * React Router
-* Custom CSS3 (Modular & Responsive)
+* Custom SCSS (Modular & Responsive)
 
 **Backend:**
 * Python + FastAPI
