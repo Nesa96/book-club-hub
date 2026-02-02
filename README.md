@@ -55,8 +55,8 @@ python main.py # or uvicorn main:app --reload
 
 ### 🛠️ UX & UI improvements
 - [ ] **Skeleton Screens**: Add loading screens.
-- [ ] **Confirm windows**: Modify the `window.confirm` for something more personal.
+- [ ] **Custom React modals**: Modify the `window.confirm` for something more personal.
 - [ ] **Dark Mode**: Add option to dark mode.
 
 ### 📚 New functionalities
-- [ ] **Users system**: Only been able add or delete books or reviews if you are an user.
+- [ ] **Authentication system**: Only been able add or delete books or reviews if you are an user.
