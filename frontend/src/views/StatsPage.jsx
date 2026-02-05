@@ -19,7 +19,7 @@ function StatsPage({stats, choosen_year}){
                     <p className="stat-number">{stats.total_pages}</p>
                 </div>
                 <div className="stat-card">
-                    <h3>Media Rating</h3>
+                    <h3>Average Rating</h3>
                     <p className="stat-number">{stats.avg_rating} ⭐</p>
                 </div>
                 <div className="stat-card">
