@@ -1,9 +1,10 @@
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import './StatsPage.css';
 
-const GENRE_COLORS = ['#dfd2c3', '#92816f', '#d4beab', '#97816f', '#7a7269'];
-const SIZE_COLORS = ['#b6dab1', '#789474', '#91c082'];
-const BAR_COLOR = '#7295a7'
+const GENRE_COLORS = ['#8b7355', '#a68a64', '#705d42', '#c2a683', '#5d4f3b'];
+const SIZE_COLORS = ['#6e8c6b', '#4a6d46', '#2d5a27'];
+const BAR_COLOR = '#94655c';
+const STROKE = "#d4cdbb";
 
 function StatsPage({stats, choosen_year}){
 
@@ -11,7 +12,7 @@ function StatsPage({stats, choosen_year}){
 
     return (
         <div className="stats-container">
-            <h1>Our Wrapped {choosen_year} 📖</h1>
+            <h1>Our Wrapped {choosen_year} 📗</h1>
 
             <div className="stats-grid">
                 <div className="stat-card">
@@ -40,6 +41,7 @@ function StatsPage({stats, choosen_year}){
                                 outerRadius={80}
                                 paddingAngle={1}
                                 dataKey="value"
+                                stroke={STROKE}
                             >
                                 {stats.genre_distribution.map((entry, index) => (
                                     <Cell key={`cell-${index}`} fill={GENRE_COLORS[index % GENRE_COLORS.length]} />
@@ -85,6 +87,7 @@ function StatsPage({stats, choosen_year}){
                                 outerRadius={100}
                                 paddingAngle={0}
                                 dataKey="value"
+                                stroke={STROKE}
                             >
                                 {stats.long_total.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={SIZE_COLORS[index % SIZE_COLORS.length]} />

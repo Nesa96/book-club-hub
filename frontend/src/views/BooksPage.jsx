@@ -19,7 +19,7 @@ function BooksPage({books}){
             <div className='books-container'>
                 {books.map((book) => {return (
                     <Link key={book.id} to={`/book/${book.id}`} className="book-card-link">
-                        <Book  data={book}/>
+                        <Book  data={book} isRecommended={false}/>
                     </Link>
                 )})}
             </div>

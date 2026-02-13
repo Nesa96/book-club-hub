@@ -12,7 +12,7 @@
   backdrop-filter: blur(5px);
 
   .book-content {
-    background-color: white;
+    background-color: #e7e3d5;
     padding: 2.5rem 2rem 2rem 2rem;
     border-radius: 15px;
     width: 90%;
@@ -57,6 +57,7 @@
         border: 1px solid #ddd;
         border-radius: 6px;
         font-family: inherit;
+        background-color: #ecebe3;;
       }
 
       .search-group {
@@ -67,9 +68,9 @@
 
       .magic-btn {
         align-self: center;
-        background-color: #f0f4f8;
-        border: 1px dashed #546e7a;
-        color: #546e7a;
+        background-color: #d6e2d6;
+        border: 1px dashed #547a54;
+        color: #547a54;
         padding: 8px 20px;
         border-radius: 20px;
         cursor: pointer;

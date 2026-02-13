@@ -35,7 +35,13 @@ function Header({ onAddRead, onAddRecommended, selectedYear, totalYears, setSele
                 
                 <nav className={`header-nav ${isMenuOpen ? 'open' : ''}`}>
                     <NavLink to="/" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"} onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                        Home
+                    </NavLink>
+                    <NavLink to="/all_books" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"} onClick={() => setIsMenuOpen(!isMenuOpen)}>
                         All Books
+                    </NavLink>
+                    <NavLink to="/book_month" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"} onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                        Book of the month
                     </NavLink>
                     <NavLink to="/next-book" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"} 
                              onClick={() => setIsMenuOpen(!isMenuOpen)}>

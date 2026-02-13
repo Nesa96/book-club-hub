@@ -1,11 +1,8 @@
 .main-header {
-    background-color: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px); /* Efecto cristalino moderno */
-    border-bottom: 1px solid #eaeaea;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    padding: 15px 0;
+    background-color: #2d5a27;
+    position: relative;
+    padding: 20px 0 20px 0;
+    margin: 40px 0 40px 0;
 
     .header-container {
         max-width: 1200px;
@@ -13,14 +10,31 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0;
+        position: relative;
 
-        .header-brand h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #2d3436;
-            margin: 0;
-            letter-spacing: -0.5px;
+        .header-brand {
+            position: relative;
+            h1 {
+                position: absolute;
+                top: 50%;
+                left: 0;
+                transform: translateY(-50%);
+                
+                width: 140px;
+                height: 140px;
+                background-color: #2d5a27;
+                border-radius: 50%;
+                
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                margin: 0;
+                padding: 15px;
+                font-size: 1.2rem;
+                color: #fcfaf2;
+                z-index: 10;
+            }
         }
 
         .menu-toggle {
@@ -33,11 +47,14 @@
 
         .header-nav {
             display: flex;
-            gap: 15px;
+            flex: 1;
+            justify-content: space-around;
+            align-items: center;
+            margin-left: 140px;
 
             .nav-link {
                 text-decoration: none;
-                color: #636e72;
+                color: #fcfaf2;
                 font-weight: 500;
                 font-size: 0.95rem;
                 padding: 8px 16px;
@@ -50,7 +67,7 @@
                 }
 
                 &.active {
-                    background-color: #2d3436;
+                    background-color: #20351e;
                     color: white;
                 }
             }

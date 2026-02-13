@@ -7,6 +7,7 @@ import SingleBookPage from './views/SingleBookPage';
 import Layout from './components/Layout';
 import { useEffect, useState } from 'react';
 import { API_URL } from './config.js';
+import BookOfMonth from './views/BookOfMonth.jsx';
 
 function App() {
 
@@ -54,9 +55,11 @@ function App() {
                                             selectedYear={selectedYear}
                                             setSelectedYear={setSelectedYear} 
                                             onRefresh={fetchAllData}/>}>
-                        <Route index element={<BooksPage 
+                        <Route index />
+                        <Route path="all_books" element={<BooksPage 
                                                books={books.filter(b => (b.status === 'read') && (b.year_read == selectedYear))} 
                                                onRefresh={fetchAllData}/>} />
+                        <Route path="book_month" element={<BookOfMonth book={books.find(b => (b.status === 'read') && (!b.month_read))}/>} />
                         <Route path="next-book" element={<NextBook 
                                                           recBooks={books.filter(b => b.status === 'recommended')}
                                                           onRefresh={fetchAllData}/>} />

@@ -1,0 +1,90 @@
+.bom-container {
+  padding: 50px 40px;
+  display: flex;
+  justify-content: center;
+
+  .bom-card-horizontal {
+    display: flex;
+    align-items: center;
+    max-width: 1100px;
+    gap: 80px;
+
+    .bom-image-wrapper {
+        position: relative;
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &::before {
+            content: "";
+            position: absolute;
+            width: 320px;
+            height: 320px;
+            background-color: #2d5a27;
+            border-radius: 50%;
+            top: -40px;
+            left: -20px;
+            z-index: 1;
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            width: 250px;
+            height: 200px;
+            background-color: #2d5a27;
+            border-radius: 20px;
+            bottom: -50px;
+            right: 0px;
+            z-index: 1;
+        }
+
+        img {
+            border-radius: 20px;
+            width: 65%;
+            max-width: 350px;
+            position: relative;
+            z-index: 2;
+        }
+    }
+
+    .bom-info-content {
+      flex: 1.2;
+      position: relative;
+
+      .bom-month-star {
+        position: absolute;
+        top: -40px; 
+        right: 10px; 
+        background-color: #2d5a27;
+        color: #fcfaf2;
+        padding: 25px 10px;
+        margin: 0;
+        font-weight: 800;
+        font-size: 0.85rem;
+        z-index: 5;
+        transform: rotate(15deg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 100px;
+        text-align: center;
+        clip-path: polygon(50% 0%, 61% 14%, 78% 10%, 80% 28%, 95% 34%, 88% 50%, 95% 66%, 80% 72%, 78% 90%, 61% 86%, 50% 100%, 39% 86%, 22% 90%, 20% 72%, 5% 66%, 12% 50%, 5% 34%, 20% 28%, 22% 10%, 39% 14%);
+      }
+
+      .bom-badge {
+        font-size: 3rem;
+        font-family: serif;
+        margin-bottom: 20px;
+      }
+
+      .bom-description {
+        font-size: 1rem;
+        line-height: 1.8;
+        color: #1a1a1a;
+        margin-bottom: 30px;
+      }
+    }
+  }
+}

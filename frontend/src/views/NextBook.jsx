@@ -43,7 +43,7 @@ function NextBook({recBooks, onRefresh}){
                           to={`/book/${book.id}`} 
                           className="book-card-link" 
                           state={{ isRecommended: true }}>
-                        <Book  data={book} onRefresh={onRefresh}/>
+                        <Book  data={book} isRecommended={true}/>
                     </Link>
                 )})}
             </div>
