@@ -37,7 +37,7 @@
         .back-button {
             background: none;
             border: none;
-            color: #888;
+            color: #686565;
             cursor: pointer;
             font-size: 0.9rem;
             transition: 0.3s;
@@ -83,7 +83,6 @@
             .book-average-rating {
                 display: flex;
                 align-items: center;
-                gap: 12px;
                 margin: 15px 0;
 
                 .stars-container {
@@ -135,36 +134,37 @@
                 }
             }
 
-            h1 { font-size: 2.2rem; margin: 8px 0; color: #2f3542; line-height: 1.2; }
-            .book-author { font-size: 1.1rem; color: #747d8c; margin-bottom: 25px; }
+            h1 { font-size: 2.2rem; margin: 8px 0; color: #1a1a1a; line-height: 1.2; }
+            .book-author { font-size: 1.1rem; color: #4a4a4a; margin-bottom: 25px; }
 
             .book-description {
                 .editable-group {
                     border-bottom: 1px solid #e7e2d6;;
                     padding-bottom: 8px;
                     margin-bottom: 12px;
-                    h3 { font-size: 1rem; color: #2f3542; margin: 0; }
+                    h3 { font-size: 1rem; color: #1a1a1a; margin: 0; }
                 }
-                p { line-height: 1.6; color: #57606f; font-size: 0.95rem; margin-bottom: 25px; white-space: pre-line; }
+                p { line-height: 1.6; color: #4a4a4a; font-size: 0.95rem; margin-bottom: 25px; white-space: pre-line; }
             }
 
             .book-meta {
                 .editable-item {
                     margin: 5px 0;
                 }
-                p { margin: 0; font-size: 0.9rem; color: #747d8c; }
+                p { margin: 0; font-size: 0.9rem; color: #4a4a4a; }
             }
         }
     }
 
     .book-reviews-section {
         margin-top: 20px;
-        h3 { text-align: center; margin-bottom: 20px; color: #2f3542; }
+        h3 { text-align: center; margin-bottom: 20px; color: #1a1a1a; }
 
         .add-review-btn {
             background-color: #f3ede6; color: #5d4037; border: 1px solid #d7ccc8;
             border-radius: 25px; cursor: pointer; display: block;
             margin: 0 auto 20px; padding: 5px 15px;
+            font-weight : bold;
             &:hover { background-color: #e8dfd5; }
         }
 
@@ -173,7 +173,7 @@
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 15px;
-            border-left: 5px solid black;
+            border-left: 5px solid #2d5a27;
             position: relative;
 
             .remove-review {
