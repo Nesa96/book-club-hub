@@ -8,12 +8,7 @@ function Header({ onAddRead, onAddRecommended, selectedYear, totalYears, setSele
 
     const location = useLocation();
 
-    const title_pages = {'/': "Book club read books",
-                         '/stats': 'Reading Statistics',
-                         '/next-book': 'Which would be the next book?'
-    }
-
-    const currentTitle = title_pages[location.pathname] || 'Book Club';
+    const currentTitle = 'Our Logo Book Club';
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (

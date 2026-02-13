@@ -8,6 +8,7 @@ import Layout from './components/Layout';
 import { useEffect, useState } from 'react';
 import { API_URL } from './config.js';
 import BookOfMonth from './views/BookOfMonth.jsx';
+import Hero from './views/Hero.jsx';
 
 function App() {
 
@@ -55,7 +56,7 @@ function App() {
                                             selectedYear={selectedYear}
                                             setSelectedYear={setSelectedYear} 
                                             onRefresh={fetchAllData}/>}>
-                        <Route index />
+                        <Route index element={<Hero />}/>
                         <Route path="all_books" element={<BooksPage 
                                                books={books.filter(b => (b.status === 'read') && (b.year_read == selectedYear))} 
                                                onRefresh={fetchAllData}/>} />

@@ -50,13 +50,13 @@
             flex-direction: column;
 
             button {
-                color: #ff4757;
+                color: #992731;
                 background: none;
                 border: none;
                 cursor: pointer;
                 font-size: 0.9rem;
                 font-weight: 500;
-                &:hover { color: red; text-decoration: underline; }
+                &:hover { color: rgb(134, 2, 2); text-decoration: underline; }
             }
 
         }
@@ -65,7 +65,7 @@
     .book-main-content {
         display: flex;
         gap: 50px;
-        background: white;
+        background: #d4cdbb;
         padding: 30px;
         border-radius: 12px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.05);
@@ -95,7 +95,7 @@
 
                     .stars-empty { color: #e0e0e0; }
                     .stars-filled {
-                        color: #ffb800; 
+                        color: #ad7c00; 
                         position: absolute;
                         top: 0;
                         left: 0;
@@ -118,7 +118,7 @@
                 span{
                     text-transform: uppercase;
                     font-size: 0.75rem;
-                    color: #47acff;
+                    color: #2d5a27;
                     font-weight: bold;
                     letter-spacing: 1.2px;
                 }
@@ -127,7 +127,7 @@
                     .set-month-inline button{
                         text-transform: uppercase;
                         font-size: 0.75rem;
-                        color: #47acff;
+                        color: #2d5a27;
                         font-weight: bold;
                         letter-spacing: 1.2px;
                         padding-bottom: 3px;
@@ -140,7 +140,7 @@
 
             .book-description {
                 .editable-group {
-                    border-bottom: 1px solid #f1f2f6;
+                    border-bottom: 1px solid #e7e2d6;;
                     padding-bottom: 8px;
                     margin-bottom: 12px;
                     h3 { font-size: 1rem; color: #2f3542; margin: 0; }
@@ -169,7 +169,7 @@
         }
 
         .review-card {
-            background: #f8f9fa;
+            background: #d4cdbb;
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 15px;
@@ -177,7 +177,7 @@
             position: relative;
 
             .remove-review {
-                color: #ff4757; font-size: 0.8rem; cursor: pointer;
+                color: #992731; font-size: 0.8rem; cursor: pointer;
                 background: none; border: none; display: block; margin: 0 auto 10px;
                 &:hover { text-decoration: underline; }
             }
