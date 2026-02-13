@@ -12,7 +12,7 @@ function Hero() {
                     <p>Welcome to our incredible book club, it feeds your brain even if it doesn't let you sleep</p>
                 </div> 
                 <div className="hero_img">
-                    <img src="../../public/img/book-club-hero.png" alt="Hero IMG" />
+                    <img src="/img/book-club-hero.png" alt="Hero IMG" />
                 </div>
             </div>
             <div className="hero_extra_info">
