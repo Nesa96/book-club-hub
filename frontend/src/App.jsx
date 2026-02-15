@@ -60,7 +60,7 @@ function App() {
                         <Route path="all_books" element={<BooksPage 
                                                books={books.filter(b => (b.status === 'read') && (b.year_read == selectedYear))} 
                                                onRefresh={fetchAllData}/>} />
-                        <Route path="book_month" element={<BookOfMonth book={books.find(b => (b.status === 'read') && (!b.month_read))}/>} />
+                        <Route path="book_month" element={<BookOfMonth books={books} selectedYear={selectedYear}/>} />
                         <Route path="next-book" element={<NextBook 
                                                           recBooks={books.filter(b => b.status === 'recommended')}
                                                           onRefresh={fetchAllData}/>} />

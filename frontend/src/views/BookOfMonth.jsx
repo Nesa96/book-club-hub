@@ -1,9 +1,27 @@
 import './BookOfMonth.css';
 
-function BookOfMonth({ book }) {
+function BookOfMonth({ books, selectedYear }) {
+
+  const book = books.find(b => (b.status === 'read') && (!b.month_read))
   if (!book) return null;
 
-  const month_actual = new Intl.DateTimeFormat('es-ES', { month: 'long' }).format(new Date()).toUpperCase();
+  const months = [
+    "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO",
+    "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"
+  ];
+  const read_year_books =  books.filter(book => (book.status === 'read') && (book.year_read === selectedYear) && (book.month_read));
+  const order_books = read_year_books.slice().sort((a, b) => {
+    return months.indexOf(a.month_read.toUpperCase()) - months.indexOf(b.month_read.toUpperCase());
+  });
+
+  let month_actual = ""
+  if (read_year_books.length > 0) {
+    const lastBook = order_books.at(-1);
+    const currentIndex = months.indexOf(lastBook.month_read.toUpperCase());
+    const nextIndex = (currentIndex + 1) % 12;
+    month_actual = months[nextIndex];
+  }
+  console.log(month_actual);
 
   return (
     <div className="bom-container">
