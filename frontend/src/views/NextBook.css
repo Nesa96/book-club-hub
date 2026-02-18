@@ -33,7 +33,7 @@
        z-index: 1000;
 
        .next-book-content {
-            background-color: white;
+            background-color: #d4cdbb;
             padding: 30px;
             border-radius: 12px;
             text-align: center;
@@ -72,6 +72,8 @@
         .next-book-btn .pick-btn {
             padding: 8px 16px;
             font-size: 1rem;
+            margin-top: -10px;
+            margin-bottom: 20px;
         }
 
         .next-book-pop-up {

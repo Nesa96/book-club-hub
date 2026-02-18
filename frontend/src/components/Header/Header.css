@@ -77,61 +77,76 @@
 
 /* Movile */
 @media (max-width: 600px) {
-    .main-header .header-container {
-        gap: 15px;
-        padding: 0 30px;
+    .main-header {
 
-        .header-brand h1{ font-size: 1rem !important;}
+        padding-top: 18px !important; 
+        padding-bottom: 18px !important;
+        margin-top: 50px;
+    
+        .header-container {
+            gap: 15px;
+            padding: 0 30px;
 
-        .menu-toggle {
-            display: block; 
-            background: none;
-            border: none;
-            font-size: 1rem;
-
-            &.open {
-                z-index: 10001 !important;
-                position: fixed; 
-                top: 5px;
-                right: 5px;
-                font-size: 0.8rem;
+            .header-brand h1{ 
+                font-size: 1rem !important;
+                width: 120px;
+                height: 120px;
             }
-        }
 
-        .nav-overlay {
-            background-color: transparent;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-        }
+            .menu-toggle {
+                display: block; 
+                background: none;
+                border: none;
+                font-size: 1rem;
+                color: #fcfaf2;
+                cursor: pointer;
 
-        .header-nav {
-            position: fixed;
-            top: 0;
-            right: -100%; 
-            width: 100px;
-            background: white;
-            flex-direction: column;
-            padding: 20px 5px 5px 5px;
-            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-            transition: right 0.3s ease-in-out; 
-            z-index: 10000;
-
-            &.open {
-                right: 0;
+                &.open {
+                    z-index: 10001 !important;
+                    position: fixed; 
+                    top: 10px;
+                    right: 10px;
+                    font-size: 1rem;
+                    color: #2d5a27;
+                }
             }
-            .nav-link {
-                font-size: 0.8rem;
-                color: #8f9394;
-                font-weight: 500;
-                padding: 1px 2px;
-                text-align: center;
 
-                &.active {
-                    background-color:white;
-                    color: black;
+            .nav-overlay {
+                background-color: transparent;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+            }
+
+            .header-nav {
+                position: fixed;
+                top: 0;
+                right: -100%; 
+                width: 140px;
+                background: #fcfaf2;
+                flex-direction: column;
+                justify-content: center;
+                padding: 20px 5px 5px 5px;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+                transition: right 0.3s ease-in-out; 
+                z-index: 10000;
+
+                &.open {
+                    right: 0;
+                }
+                .nav-link {
+                    font-size: 0.8rem;
+                    color: #2d5a27;
+                    font-weight: 500;
+                    padding: 5px;
+                    text-align: center;
+
+                    &.active {
+                        background-color: #2d5a27;
+                        color: #fcfaf2;
+                    }
                 }
             }
         }

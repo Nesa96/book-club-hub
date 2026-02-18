@@ -45,7 +45,7 @@ function Header({ onAddRead, onAddRecommended, selectedYear, totalYears, setSele
                     <NavLink to="/stats" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"} onClick={() => setIsMenuOpen(!isMenuOpen)}>
                         Statistics
                     </NavLink>
-                    <AddButton onAddRead={onAddRead} onAddRecommended={onAddRecommended} onClick={() => setIsMenuOpen(!isMenuOpen)}/>
+                    <AddButton onAddRead={onAddRead} onAddRecommended={onAddRecommended} closeMenu={() => setIsMenuOpen(false)}/>
                     <SelectYear totalYears={totalYears} selectedYear={selectedYear} setSelectedYear={setSelectedYear} 
                                 onClick={() => setIsMenuOpen(!isMenuOpen)}/>
                 </nav>

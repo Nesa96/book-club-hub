@@ -109,3 +109,56 @@
         }
     }
 }
+
+
+@media (max-width: 768px) {
+    .hero_container {
+        margin-top: 40px; 
+        padding: 0 20px;
+
+        .hero_basic {
+            flex-direction: column; 
+            gap: 20px;
+            text-align: center;
+
+            .hero_login_present {
+                width: 100%;
+                min-height: auto; 
+                padding: 30px 20px;
+
+                h2 {
+                    font-size: 1.8rem; 
+                }
+            }
+
+            .hero_img {
+                order: -1; 
+                width: 100%;
+
+                &::after {
+                    width: 200px;
+                    height: 200px;
+                    top: 10px;
+                    right: 50%;
+                    transform: translateX(50%); 
+                }
+
+                img {
+                    max-width: 300px; 
+                }
+            }
+        }
+
+        .hero_extra_info {
+            h3 {
+                font-size: 1.8rem;
+                text-align: center;
+            }
+
+            button {
+                width: 100%; 
+                font-size: 1.2rem;
+            }
+        }
+    }
+}

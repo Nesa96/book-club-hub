@@ -13,10 +13,11 @@
 
   .book-content {
     background-color: #e7e3d5;
-    padding: 2.5rem 2rem 2rem 2rem;
+    padding: 1.5rem;
     border-radius: 15px;
     width: 90%;
     max-width: 500px;
+    max-height: 90vh;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     position: relative;
     animation: fadeIn 0.3s ease-out;
@@ -131,4 +132,27 @@
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-20px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  .book-overlay .book-content {
+    padding: 1rem;
+    width: 95%;
+
+    form {
+      gap: 5px; 
+      label { font-size: 0.8rem; margin-bottom: -2px; }
+      
+      input, textarea { padding: 6px; font-size: 16px; }
+
+      .extra-info {
+        padding-top: 5px;
+        margin-top: 0;
+        .form-row { gap: 8px; }
+        
+        textarea { min-height: 40px; } 
+      }
+      .save-btn { margin-top: 5px; padding: 8px; }
+    }
+  }
 }

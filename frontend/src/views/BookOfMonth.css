@@ -77,6 +77,8 @@
         font-size: 3rem;
         font-family: serif;
         margin-bottom: 20px;
+        
+          color: #2d5a27;
       }
 
       .bom-description {
@@ -84,6 +86,86 @@
         line-height: 1.8;
         color: #1a1a1a;
         margin-bottom: 30px;
+      }
+    }
+  }
+}
+
+/* Movil */
+@media (max-width: 768px) {
+  .bom-container {
+    padding: 40px 20px;
+
+    .bom-card-horizontal {
+      display: flex;
+      flex-direction: column;
+      gap: 35px;
+      text-align: center;
+
+      .bom-image-wrapper {
+        width: 100%;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        
+        &::before {
+          width: 240px;
+          height: 240px;
+          top: -25px;
+          left: 50%;
+          transform: translateX(-70%);
+          z-index: 1;
+        }
+
+        &::after {
+          width: 180px;
+          height: 160px;
+          bottom: -30px;
+          right: 45%;
+          transform: translateX(75%);
+          z-index: 1;
+        }
+
+        img {
+          width: 75%; 
+          max-width: 230px;
+          position: relative;
+          z-index: 2;
+        }
+      }
+
+      .bom-info-content {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px;
+
+        .bom-month-star {
+          position: relative;
+          top: auto;
+          left: auto;
+          transform: none;
+          clip-path: none;
+          display: inline-block;
+          margin-bottom: 12px;
+          padding: 6px 20px;
+          border-radius: 50px;
+          font-size: 0.8rem;
+          background-color: #2d5a27;
+          color: #fcfaf2;
+        }
+
+        .bom-badge {
+          font-size: 1.7rem; 
+        }
+
+        .bom-description {
+          font-size: 0.9rem !important;
+          line-height: 1.4rem;
+          text-align: justify;
+          padding: 0 10px;
+        }
       }
     }
   }

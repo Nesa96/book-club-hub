@@ -53,17 +53,21 @@
 /* Movile */
 @media (max-width: 600px) {
   .add-book-dropdown {
-    display: block;
-    text-align: center;
+    display: flex; 
+    justify-content: center;
+    width: 100%;
     
     .add-btn-main {
-      color: #8f9394;
-      padding: 1px 2px;
-      background-color: white;
-      font-weight: normal;
+      color: #2d5a27;  
+      margin: 5px 0px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      border-radius: 8px;
+      background-color: #e7e3d5;
+      padding: 5px 10px;
 
       &:hover {
-        background-color: white;
+        background-color: #d4cdbb;
       }
     }
   }
