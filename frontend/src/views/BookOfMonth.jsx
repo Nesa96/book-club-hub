@@ -21,7 +21,6 @@ function BookOfMonth({ books, selectedYear }) {
     const nextIndex = (currentIndex + 1) % 12;
     month_actual = months[nextIndex];
   }
-  console.log(month_actual);
 
   return (
     <div className="bom-container">

@@ -8,6 +8,9 @@ from sqlalchemy import Column, JSON
 from contextlib import asynccontextmanager
 from dotenv import load_dotenv
 from datetime import datetime
+from urllib.request import urlopen, Request
+from urllib.parse import quote
+from bs4 import BeautifulSoup
 
 # FAST API
 @asynccontextmanager
@@ -43,6 +46,20 @@ class Book(SQLModel, table=True):
     summary: Optional[str] = None
     reviews: List[Dict] = Field(default=[], sa_column=Column(JSON))
     media_rating: Optional[float]
+
+class BookInfo(BaseModel):
+    title: str
+    author: str
+    year: int
+    summary: str
+    cover_url: str
+    pages: int
+    genre: str
+
+class BookSearch(BaseModel):
+    title: str
+    author: str
+    isbn: Optional[str]
 
 
 #SQLite in case you want a local database - no need for the env file then
@@ -152,6 +169,57 @@ def create_book(book: Book, session: Session = Depends(get_session)):
     session.commit()
     session.refresh(book)
     return book
+
+@app.post("/scrape-book", response_model=BookInfo)
+def scrape_book(search: BookSearch):
+    try:
+        headers={'User-Agent': 'Mozilla/5.0'}
+        if search.isbn: 
+            url = "https://www.goodreads.com/search?q={}&search_type=books".format(search.isbn)
+        else:
+            title_author = search.title + " " + search.author
+            title_author.replace(" ", "+")
+            search_url = "https://www.goodreads.com/search?q={}&search_type=books".format(quote(title_author))
+
+            req_search = Request(search_url, headers=headers)
+            soup_search = BeautifulSoup(urlopen(req_search).read().decode("utf-8"), "html.parser")
+
+            link_tag = soup_search.find("a", class_="bookTitle")
+            if not link_tag:
+                raise Exception("Book not found") 
+            url = "https://www.goodreads.com/" + link_tag["href"]
+
+        req_main_search = Request(url, headers=headers)
+        page = urlopen(req_main_search)
+        html_bytes = page.read()
+        html = html_bytes.decode("utf-8")
+        soup = BeautifulSoup(html, "html.parser")
+
+        if not search.title:
+            title = soup.find("h1", {"data-testid": "bookTitle"}).get_text()
+
+        if not search.author:
+            author = soup.find("span", class_='ContributorLink__name').get_text()
+
+        summary = soup.find("div", class_='BookPageMetadataSection__description').get_text()
+        publication_info = soup.find("p", {"data-testid": "publicationInfo"}).get_text()
+        pages_info = soup.find("p", {"data-testid": "pagesFormat"}).get_text()
+        pages = int(pages_info.split(" pages")[0])
+        year = int(publication_info.split(",")[-1])
+        cover_url = soup.find("img", class_='ResponsiveImage')['src']
+        genre = soup.find("span", class_='BookPageMetadataSection__genreButton').get_text()
+        
+        return {
+            "title": search.title if search.title else title,
+            "author": search.author if search.author else author,
+            "summary": summary,
+            "cover_url": cover_url,
+            "pages": pages,
+            "year": year,
+            "genre": genre
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.patch("/books/{book_id}", response_model=Book)
 def update_book(book_id: int, update_data: dict, session: Session = Depends(get_session)):

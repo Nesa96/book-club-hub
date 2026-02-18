@@ -15,6 +15,7 @@ function NewBookInfo({ type, onClose, onRefresh}) {
         cover_url: '',
         status: type
     });
+    const [isbn, setIsbn] = useState('')
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -24,29 +25,43 @@ function NewBookInfo({ type, onClose, onRefresh}) {
     const [isLoading, setIsLoading] = useState(false);
 
     const searchInGoogleBooks = async () => {
-        if (!formData.title && !formData.author) {
-            alert("Please add the title and author of the book to search more info")
+        if (!isbn && (!formData.title || !formData.author)) {
+            alert("Please add the title and author of the book or the ISBN to search more info")
             return;
         }
         
         setIsLoading(true);
         try {
-            const API_KEY = "AIzaSyBthG4VcTL580C0Q5NqmKyZbCmmUs7mftk";
-            const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:${formData.title}+inauthor:${formData.author}&key=${API_KEY}`);
+          const response = await fetch(`${API_URL}/scrape-book`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    title: formData.title,
+                    author: formData.author,
+                    isbn: isbn.replace(/-/g, '').trim()
+                }),
+            });
+
             const data = await response.json();
-            
-            if (data.items && data.items.length > 0) {
-                const info = data.items[0].volumeInfo;
+
+            if (response.ok) {
                 setFormData({
                     ...formData,
-                    author: info.authors ? info.authors[0] : formData.author,
-                    year: info.publishedDate ? info.publishedDate.split('-')[0] : '',
-                    pages: info.pageCount || 0,
-                    summary: info.description || '',
-                    cover_url: info.imageLinks ? info.imageLinks.thumbnail.replace('http:', 'https:') : '',
-                    genre: info.categories ? info.categories[0] : 'Other'
+                    title: data.title || '',
+                    author: data.author || '',
+                    year: data.year || '',
+                    summary: data.summary || '',
+                    cover_url: data.cover_url || '',
+                    pages: data.pages || 0,
+                    genre: data.genre ||''
                 });
-            } 
+            } else {
+                alert(data.detail || "Book not found in Goodreads");
+            }
+        } catch (error) {
+            console.error("Error connecting to backend:", error);
         } finally {
             setIsLoading(false);
         }
@@ -99,8 +114,11 @@ function NewBookInfo({ type, onClose, onRefresh}) {
           <label htmlFor="author">Author</label>
           <input type="text" name="author" value={formData.author} onChange={handleChange} />
 
-          <button type="button" onClick={searchInGoogleBooks} className="magic-btn">
-            Search More Info
+          <label htmlFor="isbn">ISBN - only if Author and Title are not working</label>
+          <input type="text" name="isbn" value={isbn} onChange={(e) => setIsbn(e.target.value)} />
+
+          <button type="button" onClick={searchInGoogleBooks} className="magic-btn" disabled={isLoading}>
+            {isLoading ? "Searching..." : "Search More Info"}
           </button>
 
           <div className="extra-info">
