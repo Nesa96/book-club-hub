@@ -3,7 +3,7 @@
 A professional web platform designed to manage a personal library, track reading progress, and organize books by status, months, and ratings. This project showcases a full-stack integration between a modern React frontend and a robust FastAPI backend.
 
 ## 📸 Screenshots
-![Dashboard Preview](./screenshots/book-club-screenshot.png)
+![Dashboard Preview](./screenshots/book-club-screenshot.png?v=1.1)
 ---
 
 ## 🚀 Key Features
