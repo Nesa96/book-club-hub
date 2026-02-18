@@ -24,6 +24,7 @@ A professional web platform designed to manage a personal library, track reading
 * Python + FastAPI
 * SQLModel (ORM & Pydantic validation)
 * PostgreSQL (Neon.tech)
+* **Web Scraping:** BeautifulSoup4 & Urllib (Real-time book data extraction)
 
 **Deployment:**
 * Database: Neon.tech
