@@ -105,7 +105,7 @@ function NewBookInfo({ type, onClose, onRefresh}) {
           &times;
         </button>
 
-        <h2>Add {type === 'read' ? 'New Book' : 'Next book recommendation'}</h2>
+        <h2>Add {type === 'read' ? 'new book' : 'next book recommendation'}</h2>
 
         <form className="book-form" onSubmit={addBookDB}>
           <label htmlFor="title">Title</label>

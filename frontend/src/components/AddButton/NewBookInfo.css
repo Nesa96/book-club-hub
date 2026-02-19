@@ -139,6 +139,16 @@
     padding: 1rem;
     width: 95%;
 
+    .close-x {
+      top: 5px;
+      right: 10px;
+    }
+
+    h2 {
+      font-size: 1.3rem;
+      text-align: center;
+    }
+
     form {
       gap: 5px; 
       label { font-size: 0.8rem; margin-bottom: -2px; }
