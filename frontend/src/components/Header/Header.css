@@ -1,5 +1,5 @@
 .main-header {
-    background-color: #2d5a27;
+    background-color: var(--primary-green);
     position: relative;
     padding: 20px 0 20px 0;
     margin: 40px 0 40px 0;
@@ -22,7 +22,7 @@
                 
                 width: 140px;
                 height: 140px;
-                background-color: #2d5a27;
+                background-color: var(--primary-green);
                 border-radius: 50%;
                 
                 display: flex;
@@ -32,7 +32,7 @@
                 margin: 0;
                 padding: 15px;
                 font-size: 1.2rem;
-                color: #fcfaf2;
+                color: var(--white-bone);
                 z-index: 10;
             }
         }
@@ -54,7 +54,7 @@
 
             .nav-link {
                 text-decoration: none;
-                color: #fcfaf2;
+                color: var(--white-bone);
                 font-weight: 500;
                 font-size: 0.95rem;
                 padding: 8px 16px;
@@ -67,7 +67,7 @@
                 }
 
                 &.active {
-                    background-color: #20351e;
+                    background-color: var(--primary-green-dark);
                     color: white;
                 }
             }
@@ -98,7 +98,7 @@
                 background: none;
                 border: none;
                 font-size: 1rem;
-                color: #fcfaf2;
+                color: var(--white-bone);
                 cursor: pointer;
 
                 &.open {
@@ -107,7 +107,7 @@
                     top: 10px;
                     right: 10px;
                     font-size: 1rem;
-                    color: #2d5a27;
+                    color: var(--primary-green);
                 }
             }
 
@@ -125,7 +125,7 @@
                 top: 0;
                 right: -100%; 
                 width: 140px;
-                background: #fcfaf2;
+                background: var(--white-bone);
                 flex-direction: column;
                 justify-content: center;
                 padding: 20px 5px 5px 5px;
@@ -138,14 +138,14 @@
                 }
                 .nav-link {
                     font-size: 0.8rem;
-                    color: #2d5a27;
+                    color: var(--primary-green);
                     font-weight: 500;
                     padding: 5px;
                     text-align: center;
 
                     &.active {
-                        background-color: #2d5a27;
-                        color: #fcfaf2;
+                        background-color: var(--primary-green);
+                        color: var(--white-bone);
                     }
                 }
             }

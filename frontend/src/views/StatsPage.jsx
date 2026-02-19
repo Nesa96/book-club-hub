@@ -2,9 +2,9 @@ import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveCo
 import './StatsPage.css';
 
 const GENRE_COLORS = ['#8b7355', '#a68a64', '#705d42', '#c2a683', '#5d4f3b'];
-const SIZE_COLORS = ['#6e8c6b', '#4a6d46', '#2d5a27'];
+const SIZE_COLORS = ['#6e8c6b', '#4a6d46', 'var(--primary-green)'];
 const BAR_COLOR = '#94655c';
-const STROKE = "#d4cdbb";
+const STROKE = "var(--bg-card);";
 
 function StatsPage({stats, choosen_year}){
 

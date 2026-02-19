@@ -31,7 +31,7 @@ function BookOfMonth({ books, selectedYear }) {
 
         <div className='bom-info-content'>
           <p className="bom-month-star">{month_actual}</p>
-          <h2 className="bom-badge">This month we have</h2>
+          <h2 className="bom-badge">READING BOOK</h2>
           <p className="bom-description">
             {book.summary || "No more info"}
           </p>

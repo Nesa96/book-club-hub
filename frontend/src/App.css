@@ -1,16 +1,38 @@
-@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,400;1,500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400;1,500&display=swap");
+
+:root {
+  --primary-green: #2d5a27;
+  --primary-green-dark: #20351e;
+  --bg-crema: #e7e3d5;
+  --bg-card: #d4cdbb;
+  --bg-input: #ecebe3;
+  --white-bone: #fcfaf2;
+  --text-main: #1a1a1a;
+  --text-sec: #4a4a4a;
+  --primary-red: #992731;
+  --extra-button: #5d4037;
+  --extra-brown: #795548;
+  --mobile-breakpoint: 768px;
+}
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "Lora", sans-serif;
+  font-family: 'Lora', serif !important; 
 }
 
 body {
-  background-color: #e7e3d5;
-  margin: 0;
+  background-color: var(--bg-crema);
+  color: var(--text-main);
+  line-height: 1.6;
 }
 
+button, input, textarea, select, span, p, h1, h2, h3 {
+  font-family: inherit !important;
+}
 
-
+a {
+  text-decoration: none;
+  color: inherit;
+}
