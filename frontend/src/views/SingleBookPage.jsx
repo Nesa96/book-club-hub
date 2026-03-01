@@ -152,17 +152,14 @@ function SingleBookPage({allBooks, onRefresh}){
                 <button className="back-button" onClick={() => navigate(-1)}>
                     {isRecommended ? "← Back to next book page" : "← Back to all books page"}
                 </button>
-
-                <div className='change-btns'>
-                    <button className="remove-book" onClick={removeBook}>
-                            REMOVE BOOK
+                {!isRecommended &&
+                    <button className="back-to-recommended" onClick={backToRec}>
+                            MOVE TO RECOMMENDED
                     </button>
-                    {!isRecommended &&
-                        <button className="back-to-recommended" onClick={backToRec}>
-                                BACK TO RECOMMENDED
-                        </button>
-                    }
-                </div>
+                }
+                <button className="remove-book" onClick={removeBook}>
+                        🗑️
+                </button>
             </div>
 
             <div className="book-main-content"> 
