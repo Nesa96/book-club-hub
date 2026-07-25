@@ -10,6 +10,9 @@ from dotenv import load_dotenv
 from datetime import datetime
 from urllib.request import urlopen, Request
 from urllib.parse import quote
+import requests
+import re
+import time
 from bs4 import BeautifulSoup
 
 # FAST API
@@ -221,8 +224,18 @@ def scrape_book(search: BookSearch):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
  """
-import requests
-import re
+def fetch_with_retry(url, params=None, headers=None, retries=3, timeout=15):
+    last_error = None
+    for attempt in range(retries):
+        try:
+            resp = requests.get(url, params=params, headers=headers, timeout=timeout)
+            resp.raise_for_status()
+            return resp
+        except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
+            last_error = e
+            time.sleep(1.5 * (attempt + 1))
+    raise Exception(f"No se pudo conectar con Open Library tras {retries} intentos: {last_error}")
+
 @app.post("/scrape-book", response_model=BookInfo)
 def scrape_book(search: BookSearch):
     try:
@@ -236,7 +249,7 @@ def scrape_book(search: BookSearch):
                 "format": "json",
                 "jscmd": "data"
             }
-            resp = requests.get(url, headers=headers, params=params, timeout=10)
+            resp = fetch_with_retry(url, headers=headers, params=params, timeout=10)
             resp.raise_for_status()
             data = resp.json()
 
@@ -260,7 +273,7 @@ def scrape_book(search: BookSearch):
             works = book_data.get("works")
             if works:
                 work_key = works[0]["key"]  # ej: "/works/OL12345W"
-                work_resp = requests.get(f"https://openlibrary.org{work_key}.json", headers=headers, timeout=10)
+                work_resp = fetch_with_retry(f"https://openlibrary.org{work_key}.json", headers=headers, timeout=10)
                 if work_resp.ok:
                     work_data = work_resp.json()
                     desc = work_data.get("description")
@@ -273,7 +286,7 @@ def scrape_book(search: BookSearch):
             # Búsqueda por título y autor
             search_url = "https://openlibrary.org/search.json"
             params = {"title": search.title, "author": search.author, "limit": 1}
-            resp = requests.get(search_url, headers=headers, params=params, timeout=10)
+            resp = fetch_with_retry(search_url, headers=headers, params=params, timeout=10)
             resp.raise_for_status()
             results = resp.json().get("docs", [])
 
@@ -292,7 +305,7 @@ def scrape_book(search: BookSearch):
             summary = None
             work_key = doc.get("key")  # ej: "/works/OL12345W"
             if work_key:
-                work_resp = requests.get(f"https://openlibrary.org{work_key}.json", headers=headers, timeout=10)
+                work_resp = fetch_with_retry(f"https://openlibrary.org{work_key}.json", headers=headers, timeout=10)
                 if work_resp.ok:
                     work_data = work_resp.json()
                     desc = work_data.get("description")
@@ -312,7 +325,7 @@ def scrape_book(search: BookSearch):
             "author": search.author if search.author else author,
             "summary": summary or "",
             "cover_url": cover_url,
-            "pages": pages,
+            "pages": pages or 0,
             "year": year,
             "genre": genre or ""
         }
