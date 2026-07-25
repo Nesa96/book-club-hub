@@ -170,7 +170,7 @@ def create_book(book: Book, session: Session = Depends(get_session)):
     session.refresh(book)
     return book
 
-@app.post("/scrape-book", response_model=BookInfo)
+""" @app.post("/scrape-book", response_model=BookInfo)
 def scrape_book(search: BookSearch):
     try:
         headers={'User-Agent': 'Mozilla/5.0'}
@@ -218,6 +218,105 @@ def scrape_book(search: BookSearch):
             "year": year,
             "genre": genre
         }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+ """
+import requests
+import re
+@app.post("/scrape-book", response_model=BookInfo)
+def scrape_book(search: BookSearch):
+    try:
+        headers = {'User-Agent': 'MyBookApp/1.0 (contacto@tudominio.com)'}
+
+        if search.isbn:
+            # Endpoint directo por ISBN
+            url = "https://openlibrary.org/api/books"
+            params = {
+                "bibkeys": f"ISBN:{search.isbn}",
+                "format": "json",
+                "jscmd": "data"
+            }
+            resp = requests.get(url, headers=headers, params=params, timeout=10)
+            resp.raise_for_status()
+            data = resp.json()
+
+            print("Status:", resp.status_code)
+            print("URL final:", resp.url)
+            print("Respuesta:", resp.text[:1000])
+
+            book_data = data.get(f"ISBN:{search.isbn}")
+            if not book_data:
+                raise Exception("Book not found")
+
+            title = book_data.get("title", search.title)
+            author = book_data.get("authors", [{}])[0].get("name", search.author)
+            cover_url = book_data.get("cover", {}).get("large")
+            pages = book_data.get("number_of_pages")
+            publish_date = book_data.get("publish_date", "")
+            genre = book_data.get("subjects", [{}])[0].get("name") if book_data.get("subjects") else None
+
+            # La descripción no siempre viene en este endpoint, hay que ir al "work"
+            summary = None
+            works = book_data.get("works")
+            if works:
+                work_key = works[0]["key"]  # ej: "/works/OL12345W"
+                work_resp = requests.get(f"https://openlibrary.org{work_key}.json", headers=headers, timeout=10)
+                if work_resp.ok:
+                    work_data = work_resp.json()
+                    desc = work_data.get("description")
+                    if isinstance(desc, dict):
+                        summary = desc.get("value")
+                    elif isinstance(desc, str):
+                        summary = desc
+
+        else:
+            # Búsqueda por título y autor
+            search_url = "https://openlibrary.org/search.json"
+            params = {"title": search.title, "author": search.author, "limit": 1}
+            resp = requests.get(search_url, headers=headers, params=params, timeout=10)
+            resp.raise_for_status()
+            results = resp.json().get("docs", [])
+
+            if not results:
+                raise Exception("Book not found")
+
+            doc = results[0]
+            title = doc.get("title", search.title)
+            author = doc.get("author_name", [search.author])[0]
+            pages = doc.get("number_of_pages_median")
+            publish_year = doc.get("first_publish_year")
+            genre = doc.get("subject", [None])[0]
+            cover_id = doc.get("cover_i")
+            cover_url = f"https://covers.openlibrary.org/b/id/{cover_id}-L.jpg" if cover_id else None
+
+            summary = None
+            work_key = doc.get("key")  # ej: "/works/OL12345W"
+            if work_key:
+                work_resp = requests.get(f"https://openlibrary.org{work_key}.json", headers=headers, timeout=10)
+                if work_resp.ok:
+                    work_data = work_resp.json()
+                    desc = work_data.get("description")
+                    if isinstance(desc, dict):
+                        summary = desc.get("value")
+                    elif isinstance(desc, str):
+                        summary = desc
+
+            publish_date = str(publish_year) if publish_year else ""
+
+        # Extraer año como int desde publish_date (puede venir como "2020" o "Jan 01, 2020")
+        year_match = re.search(r"\d{4}", publish_date or "")
+        year = int(year_match.group()) if year_match else None
+
+        return {
+            "title": search.title if search.title else title,
+            "author": search.author if search.author else author,
+            "summary": summary or "",
+            "cover_url": cover_url,
+            "pages": pages,
+            "year": year,
+            "genre": genre or ""
+        }
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
